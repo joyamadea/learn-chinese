@@ -1,0 +1,7 @@
+{
+  "name": "learn-chinese",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
