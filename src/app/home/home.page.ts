@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PinyinService } from '../services/pinyin.service';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  constructor(private pinyinService: PinyinService) {}
 
-  constructor() {}
-
+  ngOnInit() {
+    // this.pinyinService.getPinyin().then((res: any) => {
+    //   console.log(res);
+    // });
+  }
 }
