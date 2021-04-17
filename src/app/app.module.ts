@@ -13,6 +13,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HTTP } from '@ionic-native/http/ngx';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
+import { AngularFireDatabaseModule } from '@angular/fire/database'
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +25,8 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

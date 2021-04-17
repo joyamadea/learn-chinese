@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>category</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let category of categories">
+    <ion-row>
+      <ion-col (click)="gotoLevels(category.key)">
+        <span>{{ category.key }}</span>
+      </ion-col>
+    </ion-row>
+  </div>
+  
+</ion-content>

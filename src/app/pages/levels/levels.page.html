@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>levels</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let level of levels">
+    <ion-row>
+      <ion-col (click)="gotoQuiz(level.key)"> {{ level.key }}</ion-col>
+    </ion-row>
+  </div>
+</ion-content>

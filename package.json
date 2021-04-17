@@ -11,10 +11,16 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "~11.2.0",
     "@angular/core": "~11.2.0",
+    "@angular/fire": "^6.1.4",
     "@angular/forms": "~11.2.0",
     "@angular/platform-browser": "~11.2.0",
     "@angular/platform-browser-dynamic": "~11.2.0",
@@ -25,11 +31,10 @@
     "@ionic-native/http": "^5.31.1",
     "@ionic-native/speech-recognition": "^5.31.1",
     "@ionic/angular": "^5.5.2",
-    "@liwb/pinyin": "0.0.0-development",
     "cordova-plugin-speechrecognition": "^1.2.0",
-    "hanzi-to-pinyin": "^1.71.0",
-    "pinyin-rest": "^1.0.2",
+    "firebase": "^8.4.1",
     "rxjs": "~6.6.0",
+    "stream": "0.0.2",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
