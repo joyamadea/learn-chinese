@@ -28,6 +28,10 @@ export class CategoryPage implements OnInit {
     })
   }
 
+  goBack() {
+    this.router.navigate(['/home']);
+  }
+
   gotoLevels(cat){
     this.router.navigate(['/category',cat]);
   }

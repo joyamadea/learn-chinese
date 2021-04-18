@@ -7,7 +7,7 @@
 <ion-content>
   <ion-row *ngIf="quiz">
     <ion-col>
-      <!-- {{ quiz[i].key }} -->
+      {{ quiz[i].option1 }}
     </ion-col>
   </ion-row>
   <ion-button (click)="next()" [disabled]="disableButton"> next</ion-button>

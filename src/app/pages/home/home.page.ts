@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { PinyinService } from '../services/pinyin.service';
+import { PinyinService } from '../../services/pinyin.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { PinyinService } from '../services/pinyin.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor(private pinyinService: PinyinService) {}
+  constructor(private pinyinService: PinyinService, private router: Router) {}
 
   ngOnInit() {
     // this.pinyinService.getPinyin().then((res: any) => {
@@ -21,5 +22,9 @@ export class HomePage {
    ).subscribe(data => {
      console.log(data);
    })
+  }
+
+  gotoCat() {
+    this.router.navigate(['/category']);
   }
 }

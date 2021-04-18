@@ -34,6 +34,10 @@ export class LevelsPage implements OnInit {
     })
   }
 
+  goBack() {
+    this.router.navigate(['/category']);
+  }
+
   gotoQuiz(level) {
     this.router.navigate(['/learn', this.cat, level]);
   }

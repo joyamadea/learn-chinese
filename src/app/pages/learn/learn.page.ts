@@ -14,8 +14,9 @@ export class LearnPage implements OnInit {
   lvl: any;
   quiz: any;
   i: number;
-  fakeLength = 10;
   array = [1,2,3,4,5,6,7,8,9,10];
+  newArray = [];
+  initialCount = 0;
   counter = 0;
   temp = [];
   disableButton = false;
@@ -39,22 +40,32 @@ export class LearnPage implements OnInit {
     ).subscribe(data => {
       // this.categories = data;
       this.quiz = data;
+      for (let index = 0; index < this.quiz.length; index++) {
+        this.newArray.push(this.initialCount);
+        this.initialCount++;
+        console.log(this.newArray);
+        
+      }
+      // while(this.quiz.length--){
+        
+      // }
       console.log(data);
+      this.random();
     });
-    this.random();
+    
   }
 
   random() {
-    let i = this.array.length;
-    console.log(i);
+    let i = this.newArray.length;
+    console.log("hi",i);
     while(i--){
       let j = Math.floor(Math.random() * (i+1));
-      let tempIndex = this.array[i];
-      this.array[i] = this.array[j];
-      this.array[j] = tempIndex;
+      let tempIndex = this.newArray[i];
+      this.newArray[i] = this.newArray[j];
+      this.newArray[j] = tempIndex;
     }
-    console.log(this.array);
-    this.i = this.array[this.counter];
+    console.log(this.newArray);
+    this.i = this.newArray[this.counter];
     console.log("initial i", this.i);
   }
 
@@ -65,15 +76,15 @@ export class LearnPage implements OnInit {
   }
 
   next() {
-    if(this.counter < this.array.length-1){
+    if(this.counter < this.newArray.length-1){
       this.counter++;
-      this.i = this.array[this.counter];
+      this.i = this.newArray[this.counter];
       console.log("new", this.i);
     } else {
       if(this.temp.length != 0){
         console.log("masuk new deck");
         this.counter = 0;
-        this.array = this.temp;
+        this.newArray = this.temp;
         this.temp = [];
         this.random();
       } else {
