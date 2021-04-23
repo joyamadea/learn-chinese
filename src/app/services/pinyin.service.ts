@@ -15,7 +15,6 @@ export class PinyinService {
   private categoryPath = '/category';
   quizRef: AngularFireList<Quiz> = null;
   categoryRef: AngularFireList<Category> = null;
-  levelRef: AngularFireList<Level> = null;
 
   constructor(private http: HttpClient, private db: AngularFireDatabase) {
     this.categoryRef = db.list(this.categoryPath);
@@ -43,8 +42,4 @@ export class PinyinService {
     return this.categoryRef;
   }
 
-  getLevel(category): AngularFireList<Level> {
-    this.levelRef = this.db.list('/category/'+category);
-    return this.levelRef;
-  }
 }
