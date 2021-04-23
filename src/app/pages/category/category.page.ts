@@ -33,7 +33,7 @@ export class CategoryPage implements OnInit {
   }
 
   gotoLevels(cat){
-    this.router.navigate(['/category',cat]);
+    this.router.navigate(['/learn',cat]);
   }
 
 }

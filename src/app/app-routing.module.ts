@@ -9,11 +9,11 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'testing',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
-    path: 'learn/:category/:id',
+    path: 'learn/:category',
     loadChildren: () =>
       import('./pages/learn/learn.module').then((m) => m.LearnPageModule),
   },

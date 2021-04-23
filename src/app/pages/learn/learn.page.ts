@@ -16,7 +16,7 @@ export class LearnPage implements OnInit {
   i: number;
   array = [1,2,3,4,5,6,7,8,9,10];
   newArray = [];
-  initialCount = 0;
+  initialCount = 1;
   counter = 0;
   temp = [];
   disableButton = false;
@@ -33,14 +33,14 @@ export class LearnPage implements OnInit {
   }
 
   ngOnInit() {
-    this.pinyinService.getQuiz(this.cat, this.lvl).snapshotChanges().pipe(
+    this.pinyinService.getQuiz(this.cat).snapshotChanges().pipe(
       map(changes => 
        changes.map(c => ({ key: c.payload.key, ...c.payload.val()}))
        )
     ).subscribe(data => {
       // this.categories = data;
       this.quiz = data;
-      for (let index = 0; index < this.quiz.length; index++) {
+      for (let index = 0; index < this.quiz.length-1; index++) {
         this.newArray.push(this.initialCount);
         this.initialCount++;
         console.log(this.newArray);

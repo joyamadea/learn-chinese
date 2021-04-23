@@ -9,11 +9,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div *ngFor="let category of categories">
-    <ion-row>
-      <ion-col (click)="gotoLevels(category.key)">
-        <span>{{ category.key }}</span>
+<ion-content class="ion-padding">
+  <div >
+    <ion-row class="ion-align-items-center">
+      <ion-col *ngFor="let category of categories" (click)="gotoLevels(category.key)" size="6" class="ion-text-center  ion-no-padding">
+        <div class="boxes text-category">{{ category.name }}</div>
       </ion-col>
     </ion-row>
   </div>

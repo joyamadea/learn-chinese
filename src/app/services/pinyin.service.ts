@@ -34,8 +34,8 @@ export class PinyinService {
     });
   }
 
-  getQuiz(cat, lvl): AngularFireList<Quiz> {
-    this.quizRef = this.db.list('/category/'+cat+'/'+lvl);
+  getQuiz(cat): AngularFireList<Quiz> {
+    this.quizRef = this.db.list('/category/'+cat);
     return this.quizRef;
   }
 
