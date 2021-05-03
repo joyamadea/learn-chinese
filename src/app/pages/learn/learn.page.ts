@@ -20,6 +20,7 @@ export class LearnPage implements OnInit {
   counter = 0;
   temp = [];
   disableButton = false;
+  answer: any;
 
   constructor(
     private speechRecognition: SpeechRecognition,
@@ -38,17 +39,12 @@ export class LearnPage implements OnInit {
        changes.map(c => ({ key: c.payload.key, ...c.payload.val()}))
        )
     ).subscribe(data => {
-      // this.categories = data;
       this.quiz = data;
       for (let index = 0; index < this.quiz.length-1; index++) {
         this.newArray.push(this.initialCount);
         this.initialCount++;
         console.log(this.newArray);
-        
       }
-      // while(this.quiz.length--){
-        
-      // }
       console.log(data);
       this.random();
     });
@@ -92,8 +88,6 @@ export class LearnPage implements OnInit {
         this.disableButton = true;
       }
     }
-    
-    
   }
 
   startSpeech() {
@@ -101,9 +95,20 @@ export class LearnPage implements OnInit {
       language: 'cmn-Hans-CN',
       showPopup: false,
     };
-    this.speechRecognition.startListening(options).subscribe(
-      (matches: string[]) => console.log(matches),
-      (onerror) => console.log('error:', onerror)
-    );
+    this.speechRecognition.startListening(options).subscribe((matches: string[]) => {
+      console.log(matches);
+      this.answer = matches[0];
+      console.log("dari speech", this.answer);
+      console.log("dari db", this.quiz[this.i].answer);
+      if(this.answer == this.quiz[this.i].answer){
+        console.log("right");
+        this.next();
+      } else {
+        console.log("wrong");
+        this.salah(this.i);
+      }
+    }, (err)=> {
+      console.log("error speech", err);
+    })
   }
 }
