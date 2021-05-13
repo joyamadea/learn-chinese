@@ -34,6 +34,15 @@ export class LearnPage implements OnInit {
   }
 
   ngOnInit() {
+    this.speechRecognition.hasPermission().then((perms: boolean) => {
+      if(perms == false){
+        this.speechRecognition.requestPermission().then(() => {
+          console.log("granted");
+        }, (err) => {
+          console.log("denied")
+        });
+      }
+    })
     this.pinyinService.getQuiz(this.cat).snapshotChanges().pipe(
       map(changes => 
        changes.map(c => ({ key: c.payload.key, ...c.payload.val()}))
@@ -53,7 +62,6 @@ export class LearnPage implements OnInit {
 
   random() {
     let i = this.newArray.length;
-    console.log("hi",i);
     while(i--){
       let j = Math.floor(Math.random() * (i+1));
       let tempIndex = this.newArray[i];
@@ -78,13 +86,11 @@ export class LearnPage implements OnInit {
       console.log("new", this.i);
     } else {
       if(this.temp.length != 0){
-        console.log("masuk new deck");
         this.counter = 0;
         this.newArray = this.temp;
         this.temp = [];
         this.random();
       } else {
-        console.log("it is finished");
         this.disableButton = true;
       }
     }
@@ -95,20 +101,29 @@ export class LearnPage implements OnInit {
       language: 'cmn-Hans-CN',
       showPopup: false,
     };
+    let rightAnswer = false;
+    let listened = false;
     this.speechRecognition.startListening(options).subscribe((matches: string[]) => {
       console.log(matches);
       this.answer = matches[0];
-      console.log("dari speech", this.answer);
-      console.log("dari db", this.quiz[this.i].answer);
       if(this.answer == this.quiz[this.i].answer){
         console.log("right");
-        this.next();
+        rightAnswer = true;
+        console.log("i after next", this.i);
       } else {
-        console.log("wrong");
-        this.salah(this.i);
+        console.log("wrong")
       }
+      listened = true;
     }, (err)=> {
       console.log("error speech", err);
-    })
+    });
+    if(rightAnswer && listened) {
+      console.log("masuk right answer");
+      this.next();
+      listened = false;
+    } else {
+      this.salah(this.i);
+      listened = false;
+    }
   }
 }
