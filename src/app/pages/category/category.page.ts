@@ -20,11 +20,10 @@ export class CategoryPage implements OnInit {
     private db: AngularFireDatabase) { }
 
   ngOnInit() {
-    this.checkUid();
-    console.log("curr lvl", this.currLvl);
   }
 
   ionViewWillEnter() {
+    this.checkUid();
     this.pinyinService.getCategory().snapshotChanges().pipe(
       map(changes => 
        changes.map(c => ({ key: c.payload.key, ...c.payload.val()}))
@@ -42,10 +41,19 @@ export class CategoryPage implements OnInit {
       this.uid = data;
       this.db.object('/users/' + this.uid).valueChanges().subscribe((data: any) => {
         this.currLvl = data.level;
+        this.categories.forEach(element => {
+          if(element.key <= this.currLvl) {
+            element.available = true;
+          } else {
+            element.available = false;
+          }
+        });
+        console.log("updated", this.categories);
       }, (err) => {
         console.log(err);
       })
     })
+    
   }
 
   goBack() {

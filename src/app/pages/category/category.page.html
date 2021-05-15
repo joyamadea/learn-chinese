@@ -12,8 +12,8 @@
 <ion-content class="ion-padding">
   <div>
     <ion-row class="ion-align-items-center">
-      <ion-col class="ion-text-center ion-no-padding" *ngFor="let category of categories" (click)="gotoLevels(category.key)" size="6" >
-        <div class="boxes text-category" [ngClass]="{ 'boxes-disabled': category.key > currLvl}">{{ category.name }}</div>
+      <ion-col class="ion-text-center ion-no-padding" *ngFor="let category of categories" size="6" >
+        <ion-button expand="full" (click)="gotoLevels(category.key)"  class="boxes text-category" [ngClass]="{ 'boxes-disabled': category.key > currLvl}" [disabled]="!category.available">{{ category.name }}</ion-button>
       </ion-col>
     </ion-row>
   </div>

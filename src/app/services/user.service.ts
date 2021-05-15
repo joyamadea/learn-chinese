@@ -33,11 +33,19 @@ export class UserService {
   }
 
   create(id): any{
+    console.log(id);
+    let body;
     const userRef = this.db.list("/users/");
-    let body = {
-      level: 1
-    };
-
-    return userRef.set(id, body);
+    const other = this.db.database.ref("/users");
+    other.once('value', (snapshot) => {
+      if(!snapshot.hasChild(id)){
+        body = {
+          level: 1
+        };
+        return userRef.set(id, body);
+      } else {
+        console.log("already exists");
+      }
+    })
   }
 }
