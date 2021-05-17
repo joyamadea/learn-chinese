@@ -48,4 +48,16 @@ export class UserService {
       }
     })
   }
+
+  updateLvl(lvl) {
+    let id;
+    this.getUid().then((uid) => {
+      id = uid;
+      const userRef = this.db.list("/users/");
+      let body = {
+        level: lvl
+      }
+      return userRef.set(id, body);
+    })
+  }
 }
