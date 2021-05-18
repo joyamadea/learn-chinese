@@ -18,12 +18,12 @@
           <img src="assets/buttons/learnBtn.png" style="width : 100%" (click)="gotoLevels(category.key)" >
           <ion-ripple-effect></ion-ripple-effect>
         </div>
-        <div *ngIf="!category.available">
-          <img src="assets/buttons/practiceBtn_ds.png" style="width : 95%">
+        <div *ngIf="!category.available" class="disabled">
+          <img src="assets/buttons/learnBtn.png" style="width : 95%">
         </div>
 
         <!-- <div class="imgbox txt-center-box ion-activatable ripple-parent starting-button">
-          <ion-text>Skyscrapers</ion-text>
+          <ion-text>{{ category.name }}</ion-text>
           <ion-ripple-effect></ion-ripple-effect>
         </div> -->
 
@@ -31,5 +31,7 @@
       </ion-col>
     </ion-row>
   </div>
-  
+
+  <ion-button (click)="openModal()">uwee</ion-button>
+  <img [src]="url">
 </ion-content>

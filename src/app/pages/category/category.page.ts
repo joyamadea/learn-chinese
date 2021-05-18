@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
+import { LevelPassPage } from 'src/app/modals/level-pass/level-pass.page';
 import { PinyinService } from 'src/app/services/pinyin.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -14,10 +17,12 @@ export class CategoryPage implements OnInit {
   categories: any;
   uid: any;
   currLvl = 1;
+  url: any;
 
   constructor(private pinyinService: PinyinService,
     private router: Router, private userService: UserService,
-    private db: AngularFireDatabase) { }
+    private db: AngularFireDatabase, private modalController: ModalController,
+    private storage: AngularFireStorage) { }
 
   ngOnInit() {
   }
@@ -32,6 +37,13 @@ export class CategoryPage implements OnInit {
       this.categories = data;
       console.log(data);
     })
+    // this.storage.ref()
+    let image = this.storage.ref('/unlocked/learnBtn.png');
+    image.getDownloadURL().subscribe((uwa) => {
+      console.log(uwa)
+      this.url = uwa;
+    });
+    // console.log("url", url);
     // this.getCats();
   }
 
@@ -62,6 +74,16 @@ export class CategoryPage implements OnInit {
 
   gotoLevels(cat){
     this.router.navigate(['/learn',cat]);
+  }
+
+  async openModal() {
+    console.log("yo");
+    const modal = await this.modalController.create({
+      component: LevelPassPage,
+      cssClass: 'alert-modal-css',
+      backdropDismiss: false
+    });
+    await modal.present();
   }
 
 }

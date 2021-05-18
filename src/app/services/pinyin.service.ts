@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { catchError, timeout, retry } from 'rxjs/operators';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Quiz } from '../models/quiz';
 import { Category } from '../models/category';
 import { Level } from '../models/levels';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +14,8 @@ export class PinyinService {
   quizRef: AngularFireList<Quiz> = null;
   categoryRef: AngularFireList<Category> = null;
 
-  constructor(private http: HttpClient, private db: AngularFireDatabase) {
+  constructor(private http: HttpClient, private db: AngularFireDatabase,
+    private storage: AngularFireStorage) {
     this.categoryRef = db.list(this.categoryPath);
   }
 

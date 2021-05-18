@@ -20,7 +20,11 @@ const routes: Routes = [
   {
     path: 'category',
     loadChildren: () => import('./pages/category/category.module').then( m => m.CategoryPageModule)
+  },  {
+    path: 'level-pass',
+    loadChildren: () => import('./modals/level-pass/level-pass.module').then( m => m.LevelPassPageModule)
   },
+
 
 ];
 

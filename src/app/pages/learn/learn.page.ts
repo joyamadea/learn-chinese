@@ -106,6 +106,8 @@ export class LearnPage implements OnInit {
         // FINISH QUIZ
         this.disableButton = true;
         this.userService.updateLvl(this.lvl+1);
+        // ADD MODAL HERE
+        this.router.navigate(['/category']);
       }
     }
   }

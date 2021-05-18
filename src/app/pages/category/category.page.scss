@@ -36,14 +36,14 @@ ion-toolbar {
     }
 }
 
-.ripple-parent {
-    position: relative;
-    overflow: hidden;
+.starting-button {
+    width: 95%; border-radius: 40px; margin: auto;
   }
-  
-  .starting-button {
-    width: 95%; border-radius: 40px; margin: auto
+
+  .disabled {
+      filter: grayscale(0.85) brightness(0.9);
   }
+
 .imgbox {
 background: 
 url('../../../assets/buttons/learnBtn.png');

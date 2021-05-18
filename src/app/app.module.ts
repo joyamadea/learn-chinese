@@ -16,6 +16,7 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/database'
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database'
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     HTTP,
     SpeechRecognition,
+    StatusBar
   ],
   bootstrap: [AppComponent],
 })
