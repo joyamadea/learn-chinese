@@ -51,6 +51,7 @@ export class UserService {
 
   updateLvl(lvl) {
     let id;
+    console.log(lvl);
     this.getUid().then((uid) => {
       id = uid;
       const userRef = this.db.list("/users/");

@@ -1,7 +1,9 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { ModalController } from '@ionic/angular';
 import { count, map } from 'rxjs/operators';
+import { LevelPassPage } from 'src/app/modals/level-pass/level-pass.page';
 import { PinyinService } from 'src/app/services/pinyin.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -29,9 +31,11 @@ export class LearnPage implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private zone: NgZone
+    private zone: NgZone,
+    private modalController: ModalController
   ) {
     this.cat = this.activatedRoute.snapshot.params['category'];
+    this.cat = Number(this.cat);
     this.lvl = this.activatedRoute.snapshot.params['id'];  
     console.log(this.cat);
   }
@@ -105,11 +109,21 @@ export class LearnPage implements OnInit {
       } else {
         // FINISH QUIZ
         this.disableButton = true;
-        this.userService.updateLvl(this.lvl+1);
+        this.userService.updateLvl(this.cat+1);
         // ADD MODAL HERE
+        this.modalFinished();
         this.router.navigate(['/category']);
       }
     }
+  }
+
+  async modalFinished() {
+    const modal = await this.modalController.create({
+      component: LevelPassPage,
+      cssClass: 'alert-modal-css',
+      backdropDismiss: false
+    });
+    await modal.present();
   }
 
   startSpeech() {

@@ -14,11 +14,11 @@
     <ion-row class="ion-align-items-center">
       <ion-col class="ion-text-center ion-no-padding" *ngFor="let category of categories" size="6" >
         
-        <div *ngIf="category.available" class="ion-activatable ripple-parent starting-button">
-          <img src="assets/buttons/learnBtn.png" style="width : 100%" (click)="gotoLevels(category.key)" >
+        <div *ngIf="category.available" [ngClass]="{ 'current': currLvl == category.key}" class="ion-activatable ripple-parent starting-button">
+          <img src="assets/buttons/learnBtn.png"  style="width : 100%" (click)="gotoLevels(category.key)" >
           <ion-ripple-effect></ion-ripple-effect>
         </div>
-        <div *ngIf="!category.available" class="disabled">
+        <div *ngIf="!category.available" class="disabled starting-button">
           <img src="assets/buttons/learnBtn.png" style="width : 95%">
         </div>
 
@@ -32,6 +32,6 @@
     </ion-row>
   </div>
 
-  <ion-button (click)="openModal()">uwee</ion-button>
-  <img [src]="url">
+  <!-- <ion-button (click)="openModal()">uwee</ion-button>
+  <img [src]="url"> -->
 </ion-content>

@@ -44,6 +44,12 @@ ion-toolbar {
       filter: grayscale(0.85) brightness(0.9);
   }
 
+  .current {
+    //   border: 3px white solid;
+    //   border-radius: 40px;
+    background-color: yellowgreen;
+  }
+
 .imgbox {
 background: 
 url('../../../assets/buttons/learnBtn.png');

@@ -28,14 +28,14 @@ export class CategoryPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.checkUid();
     this.pinyinService.getCategory().snapshotChanges().pipe(
       map(changes => 
        changes.map(c => ({ key: c.payload.key, ...c.payload.val()}))
        )
     ).subscribe(data => {
       this.categories = data;
-      console.log(data);
+      this.checkUid();
+      console.log(this.categories);
     })
     // this.storage.ref()
     let image = this.storage.ref('/unlocked/learnBtn.png');

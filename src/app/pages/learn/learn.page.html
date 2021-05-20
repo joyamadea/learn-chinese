@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header translucent="true">
   <ion-toolbar>
     <ion-buttons slot="primary">
       <ion-button (click)="closeLearning()">
@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="quiz">
+<ion-content *ngIf="quiz" fullscreen="true">
   <ion-row >
     <ion-col>
       {{ quiz[i].option1 }}
@@ -17,21 +17,46 @@
   </ion-row>
   <ion-row class="ion-align-items-center">
     <ion-col size="6" class="ion-text-center ion-no-padding">
-      <div class="option-box">{{ quiz[i].option1 }}</div>
+      <div class="container">
+        <img src="assets/buttons/b_4.png" style="width: 80%">
+        <div class="centered">{{ quiz[i].option1 }}</div>
+      </div>
     </ion-col>
     <ion-col size="6" class="ion-text-center ion-no-padding">
-      <div class="option-box">{{ quiz[i].option2 }}</div>
+      <div class="container">
+        <img src="assets/buttons/b_4.png" style="width: 80%">
+        <div class="centered">{{ quiz[i].option2 }}</div>
+      </div>
     </ion-col>
     <ion-col size="6" class="ion-text-center ion-no-padding">
-      <div class="option-box">{{ quiz[i].option3 }}</div>
+      <div class="container">
+        <img src="assets/buttons/b_4.png" style="width: 80%">
+        <div class="centered">{{ quiz[i].option3 }}</div>
+      </div>
     </ion-col>
     <ion-col size="6" class="ion-text-center ion-no-padding">
-      <div class="option-box">{{ quiz[i].option4 }}</div>
+      <div class="container">
+        <img src="assets/buttons/b_4.png" style="width: 80%">
+        <div class="centered">{{ quiz[i].option4 }}</div>
+      </div>
+    </ion-col>
+  </ion-row>
+  
+  <ion-row>
+    <ion-col>
+      <div class="ion-activatable ripple-parent starting-button">
+        <img src="assets/buttons/answerBtn.png" style="width : 100%" (click)="startSpeech()" >
+        <ion-ripple-effect></ion-ripple-effect>
+      </div>
+      
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-button (click)="startSpeech()" expand="block" class="ion-text-capitalize">Answer</ion-button>
+      <ion-button (click)="next()" expand="full" class="ion-text-capitalize">nexet</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button (click)="wrongAnswer()" expand="full" class="ion-text-capitalize">wrong</ion-button>
     </ion-col>
   </ion-row>
   
