@@ -36,6 +36,7 @@
     "cordova-plugin-screen-orientation": "^3.0.2",
     "cordova-plugin-speechrecognition": "^1.2.0",
     "cordova-plugin-statusbar": "^2.4.3",
+    "es6-promise-plugin": "^4.2.2",
     "firebase": "^8.4.1",
     "rxjs": "~6.6.0",
     "stream": "0.0.2",
