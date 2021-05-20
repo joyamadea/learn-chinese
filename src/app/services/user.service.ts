@@ -55,10 +55,15 @@ export class UserService {
     this.getUid().then((uid) => {
       id = uid;
       const userRef = this.db.list("/users/");
-      let body = {
-        level: lvl
-      }
-      return userRef.set(id, body);
+      this.db.object('/users/'+id).valueChanges().subscribe((data: any) => {
+        const currLvl = data.level;
+        if(currLvl == lvl - 1){
+          let body = {
+            level: lvl
+          }
+          return userRef.set(id, body);
+        }
+      })
     })
   }
 }

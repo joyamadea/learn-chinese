@@ -36,6 +36,8 @@ export class CategoryPage implements OnInit {
       this.categories = data;
       this.checkUid();
       console.log(this.categories);
+    }, (err) => {
+      console.log("err", err);
     })
     // this.storage.ref()
     let image = this.storage.ref('/unlocked/learnBtn.png');

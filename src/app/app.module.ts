@@ -17,6 +17,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/database'
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +34,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     HTTP,
     SpeechRecognition,
-    StatusBar
+    StatusBar,
+    ScreenOrientation
   ],
   bootstrap: [AppComponent],
 })

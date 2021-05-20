@@ -112,7 +112,6 @@ export class LearnPage implements OnInit {
         this.userService.updateLvl(this.cat+1);
         // ADD MODAL HERE
         this.modalFinished();
-        this.router.navigate(['/category']);
       }
     }
   }

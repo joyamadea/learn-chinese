@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -8,13 +9,14 @@ import { ModalController } from '@ionic/angular';
 })
 export class LevelPassPage implements OnInit {
 
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController, private router: Router) { }
 
   ngOnInit() {
   }
 
   
   closeModal() {
+    this.router.navigate(['/category']);
     this.modalController.dismiss();
   }
 
