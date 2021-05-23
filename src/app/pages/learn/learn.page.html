@@ -15,9 +15,9 @@
       <div class="container">
         <img src="assets/square.png" style="width: 70%">
         <div class="centered padding-10-percent">
-          {{ quiz[i].option1 }} <br>
-          <img src="assets/square.png"> <br>
-          {{quiz[i].option1 }}
+          <span class="hanzi">{{ quiz[i].answer }}</span> <br>
+          <ion-icon [src]="url" color="warning"></ion-icon> <br>
+          {{quiz[i].trans }}
         </div>
       </div>
       

@@ -1,4 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { ModalController } from '@ionic/angular';
@@ -24,6 +25,7 @@ export class LearnPage implements OnInit {
   temp = [];
   disableButton = false;
   answer: any;
+  url: any;
 
   constructor(
     private speechRecognition: SpeechRecognition,
@@ -32,7 +34,8 @@ export class LearnPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private zone: NgZone,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private storage: AngularFireStorage
   ) {
     this.cat = this.activatedRoute.snapshot.params['category'];
     this.cat = Number(this.cat);
@@ -64,6 +67,7 @@ export class LearnPage implements OnInit {
         this.newArray.push(this.initialCount);
         this.initialCount++;
         console.log(this.newArray);
+       
       }
       console.log(data);
       this.random();
@@ -85,6 +89,11 @@ export class LearnPage implements OnInit {
       this.newArray[j] = tempIndex;
     }
     this.i = this.newArray[this.counter];
+    let image = this.storage.ref('/questions/birthday-cake.svg');
+    image.getDownloadURL().subscribe((uwa) => {
+      console.log(uwa)
+      this.url = uwa;
+    });
   }
 
   wrongAnswer(i){
