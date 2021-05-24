@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -8,16 +8,26 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./level-pass.page.scss'],
 })
 export class LevelPassPage implements OnInit {
-
-  constructor(private modalController: ModalController, private router: Router) { }
+  @Input() level;
+  constructor(private modalController: ModalController, private router: Router,
+    ) { 
+      
+    }
 
   ngOnInit() {
+    console.log(this.level);
   }
 
   
-  closeModal() {
+  gotoHome() {
     this.router.navigate(['/category']);
     this.modalController.dismiss();
+  }
+
+  retry() {
+    this.router.navigate(['/learn/'+this.level]);
+    this.modalController.dismiss();
+    this.ngOnInit();
   }
 
 }

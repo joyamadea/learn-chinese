@@ -2,7 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { count, map } from 'rxjs/operators';
 import { LevelPassPage } from 'src/app/modals/level-pass/level-pass.page';
 import { PinyinService } from 'src/app/services/pinyin.service';
@@ -35,12 +35,11 @@ export class LearnPage implements OnInit {
     private userService: UserService,
     private zone: NgZone,
     private modalController: ModalController,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private toastController: ToastController
   ) {
     this.cat = this.activatedRoute.snapshot.params['category'];
     this.cat = Number(this.cat);
-    this.lvl = this.activatedRoute.snapshot.params['id'];  
-    console.log(this.cat);
   }
 
   ngOnInit() {
@@ -88,11 +87,6 @@ export class LearnPage implements OnInit {
       this.newArray[j] = tempIndex;
     }
     this.i = this.newArray[this.counter];
-    // let image = this.storage.ref('/questions/birthday-cake.svg');
-    // image.getDownloadURL().subscribe((uwa) => {
-    //   console.log(uwa)
-    //   this.url = uwa;
-    // });
   }
 
   wrongAnswer(i){
@@ -106,7 +100,6 @@ export class LearnPage implements OnInit {
     if(this.counter < this.newArray.length-1){
       this.counter++;
       this.i = this.newArray[this.counter];
-      console.log("new", this.i);
     } else {
       if(this.temp.length != 0){
         // REROLLING DECK
@@ -128,37 +121,57 @@ export class LearnPage implements OnInit {
     const modal = await this.modalController.create({
       component: LevelPassPage,
       cssClass: 'alert-modal-css',
-      backdropDismiss: false
+      backdropDismiss: false,
+      componentProps: {
+        'level': this.cat
+      }
     });
     await modal.present();
   }
 
+  async rightToast() {
+    const toast = await this.toastController.create({
+      message: 'Correct',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async wrongToast() {
+    const toast = await this.toastController.create({
+      message: 'Wrong',
+      duration: 2000
+    });
+    toast.present();
+  }
+
   startSpeech() {
-    console.log("masuk start speech");
+    // SPEECH RECOGNITION OPTIONS
     let options = {
       language: 'cmn-Hans-CN',
       showPopup: false,
     };
+
     let rightAnswer = false;
     let listened = false;
+
+    // SPEECH RECOGNITION START LISTENING
     this.speechRecognition.startListening(options).subscribe((matches: string[]) => {
       console.log(matches);
+      // FIRST MATCH = ANSWER
       this.answer = matches[0];
+      // IS ANSWER ACCORDING TO DB
       if(this.answer == this.quiz[this.i].answer){
-        console.log("right");
         rightAnswer = true;
-        console.log("i after next", this.i);
-      } else {
-        console.log("wrong")
       }
-      // listened = true;
+      // ZONING
       this.zone.run(() => {
-        console.log("im in the zoonnneee");
         if(rightAnswer) {
-          console.log("masuk right answer");
+          this.rightToast();
           this.next();
           listened = false;
         } else if(!rightAnswer){
+          this.wrongToast();
           this.wrongAnswer(this.i);
           listened = false;
         }

@@ -1,11 +1,12 @@
 <ion-header translucent="true">
   <ion-toolbar>
     <ion-buttons slot="primary">
-      <ion-button (click)="closeLearning()">
-        <ion-icon slot="icon-only" name="close"></ion-icon>
+      <ion-button (click)="closeLearning()" slot="start" fill="clear">
+        <img src="./assets/buttons/circular/close.png">
+        <ion-icon name="close" slot="icon-only" color="white"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Learn</ion-title>
+    <!-- <ion-title class="text-title" text-center>Level</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +14,7 @@
   <ion-row >
     <ion-col>
       <div class="container">
-        <img src="assets/square.png" style="width: 70%">
+        <img src="assets/square.png" style="width: 50%">
         <div class="centered padding-10-percent">
           <span class="hanzi">{{ quiz[i].answer }}</span> <br>
           <!-- <ion-icon [src]="url" color="warning"></ion-icon> <br> -->

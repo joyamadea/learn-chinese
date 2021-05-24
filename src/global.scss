@@ -48,5 +48,12 @@
     position: relative;
     overflow: hidden;
   }
+
+  .text {
+    &-title {
+        color: #FFD21F;
+        font-weight: bold;
+    }
+}
   
   

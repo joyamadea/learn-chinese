@@ -10,10 +10,27 @@
     </ion-col>
 
     <ion-col size="12">
-      <div class="ion-activatable ripple-parent starting-button" (click)="closeModal()">
-        <img src="assets/buttons/learnBtn.png">
+      <div
+        class="ion-activatable ripple-parent starting-button float-left"
+        (click)="gotoHome()"
+      >
+        <img class="width-40" src="assets/buttons/circular/home.png" />
+        <ion-ripple-effect></ion-ripple-effect>
+      </div>
+
+      <div
+        class="ion-activatable ripple-parent starting-button"
+        (click)="retry()"
+      >
+        <img class="width-40" src="assets/buttons/circular/retry.png" />
         <ion-ripple-effect></ion-ripple-effect>
       </div>
     </ion-col>
+    <!-- <ion-col size="6">
+      <div class="ion-activatable ripple-parent starting-button" (click)="closeModal()">
+        <img src="assets/buttons/circular/retry.png">
+        <ion-ripple-effect></ion-ripple-effect>
+      </div>
+    </ion-col> -->
   </ion-row>
 </ion-content>
