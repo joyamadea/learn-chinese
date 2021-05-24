@@ -4,6 +4,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
+import { ConfirmExitPage } from 'src/app/modals/confirm-exit/confirm-exit.page';
 import { LevelPassPage } from 'src/app/modals/level-pass/level-pass.page';
 import { PinyinService } from 'src/app/services/pinyin.service';
 import { UserService } from 'src/app/services/user.service';
@@ -92,7 +93,6 @@ export class CategoryPage implements OnInit {
   }
 
   async openModal() {
-    console.log('yo');
     const modal = await this.modalController.create({
       component: LevelPassPage,
       cssClass: 'alert-modal-css',

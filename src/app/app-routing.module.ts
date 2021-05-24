@@ -24,6 +24,10 @@ const routes: Routes = [
     path: 'level-pass',
     loadChildren: () => import('./modals/level-pass/level-pass.module').then( m => m.LevelPassPageModule)
   },
+  {
+    path: 'confirm-exit',
+    loadChildren: () => import('./modals/confirm-exit/confirm-exit.module').then( m => m.ConfirmExitPageModule)
+  },
 
 
 ];
