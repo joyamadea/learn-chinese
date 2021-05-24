@@ -34,19 +34,17 @@ export class CategoryPage implements OnInit {
        )
     ).subscribe(data => {
       this.categories = data;
+      this.categories.forEach(element => {
+        let img = this.storage.ref(element.pic);
+        img.getDownloadURL().subscribe((Url) => {
+          element.url = Url;
+        })
+      });
       this.checkUid();
       console.log(this.categories);
     }, (err) => {
       console.log("err", err);
     })
-    // this.storage.ref()
-    let image = this.storage.ref('/unlocked/learnBtn.png');
-    image.getDownloadURL().subscribe((uwa) => {
-      console.log(uwa)
-      this.url = uwa;
-    });
-    // console.log("url", url);
-    // this.getCats();
   }
 
   checkUid() {

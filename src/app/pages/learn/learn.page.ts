@@ -20,7 +20,7 @@ export class LearnPage implements OnInit {
   i: number;
   array = [1,2,3,4,5,6,7,8,9,10];
   newArray = [];
-  initialCount = 1;
+  initialCount = 2;
   counter = 0;
   temp = [];
   disableButton = false;
@@ -63,11 +63,10 @@ export class LearnPage implements OnInit {
     ).subscribe(data => {
       this.quiz = data;
       // PUSHING TO ARRAY FOR RANDOMIZING INDEX
-      for (let index = 0; index < this.quiz.length-1; index++) {
+      for (let index = 0; index < this.quiz.length-2; index++) {
+        // newArray contains indexes of questions
         this.newArray.push(this.initialCount);
         this.initialCount++;
-        console.log(this.newArray);
-       
       }
       console.log(data);
       this.random();
@@ -89,11 +88,11 @@ export class LearnPage implements OnInit {
       this.newArray[j] = tempIndex;
     }
     this.i = this.newArray[this.counter];
-    let image = this.storage.ref('/questions/birthday-cake.svg');
-    image.getDownloadURL().subscribe((uwa) => {
-      console.log(uwa)
-      this.url = uwa;
-    });
+    // let image = this.storage.ref('/questions/birthday-cake.svg');
+    // image.getDownloadURL().subscribe((uwa) => {
+    //   console.log(uwa)
+    //   this.url = uwa;
+    // });
   }
 
   wrongAnswer(i){
