@@ -8,10 +8,11 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private statusBar: StatusBar, private screenOrientation: ScreenOrientation) {
+  constructor(
+    private statusBar: StatusBar,
+    private screenOrientation: ScreenOrientation
+  ) {
     this.statusBar.backgroundColorByHexString('#b20000');
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
   }
-
-
 }

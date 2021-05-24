@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="goBack()" slot="start" fill="clear">
-        <img src="./assets/buttons/circular/back.png"> 
+        <img src="./assets/buttons/circular/back.png" />
         <ion-icon name="arrow-back" slot="icon-only" color="white"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -13,16 +13,26 @@
 <ion-content class="ion-padding" fullscreen="true">
   <div>
     <ion-row class="ion-align-items-center">
-      <ion-col class="ion-text-center ion-no-padding" *ngFor="let category of categories" size="6" >
-        
-        <div *ngIf="category.available" [ngClass]="{ 'current': currLvl == category.key}" class="ion-activatable ripple-parent starting-button">
-          <img [src]="category.url"  style="width : 100%" (click)="gotoLevels(category.key)" >
+      <ion-col
+        class="ion-text-center ion-no-padding"
+        *ngFor="let category of categories"
+        size="6"
+      >
+        <div
+          *ngIf="category.available"
+          [ngClass]="{ 'current': currLvl == category.key}"
+          class="ion-activatable ripple-parent starting-button"
+        >
+          <img
+            [src]="category.url"
+            style="width: 100%"
+            (click)="gotoLevels(category.key)"
+          />
           <ion-ripple-effect></ion-ripple-effect>
         </div>
         <div *ngIf="!category.available" class="disabled starting-button">
-          <img [src]="category.url" style="width : 95%">
+          <img [src]="category.url" style="width: 95%" />
         </div>
-
       </ion-col>
     </ion-row>
   </div>

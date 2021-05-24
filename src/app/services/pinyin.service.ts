@@ -14,31 +14,35 @@ export class PinyinService {
   quizRef: AngularFireList<Quiz> = null;
   categoryRef: AngularFireList<Category> = null;
 
-  constructor(private http: HttpClient, private db: AngularFireDatabase,
-    private storage: AngularFireStorage) {
+  constructor(
+    private http: HttpClient,
+    private db: AngularFireDatabase,
+    private storage: AngularFireStorage
+  ) {
     this.categoryRef = db.list(this.categoryPath);
   }
 
   getPinyin() {
     return new Promise((resolve, reject) => {
-      this.http.get('https://api.pinyin.pepe.asia/pinyin/我的猫喜欢喝牛奶').subscribe(
-        (res) => {
-          resolve(res);
-        },
-        (err) => {
-          reject(err);
-        }
-      );
+      this.http
+        .get('https://api.pinyin.pepe.asia/pinyin/我的猫喜欢喝牛奶')
+        .subscribe(
+          (res) => {
+            resolve(res);
+          },
+          (err) => {
+            reject(err);
+          }
+        );
     });
   }
 
   getQuiz(cat): AngularFireList<Quiz> {
-    this.quizRef = this.db.list('/category/'+cat);
+    this.quizRef = this.db.list('/category/' + cat);
     return this.quizRef;
   }
 
   getCategory(): AngularFireList<Category> {
     return this.categoryRef;
   }
-
 }

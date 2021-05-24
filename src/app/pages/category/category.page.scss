@@ -1,58 +1,59 @@
 ion-content {
-    --background: url('../../../assets/background.jpg') no-repeat center center / cover;
-    font-family: keepCalm;
+  --background: url("../../../assets/background.jpg") no-repeat center center /
+    cover;
+  font-family: keepCalm;
 }
 
 ion-toolbar {
-    --background: transparent;
+  --background: transparent;
 }
 .header-md::after {
-    display: none;
-  }
+  display: none;
+}
 
 .boxes {
-    background-color: yellowgreen;
-    // padding: 20px;
-    border-radius: 6px;
-    margin: 10px;
-    vertical-align: middle;
-    &-disabled {
-        background-color: aquamarine;
-    }
+  background-color: yellowgreen;
+  // padding: 20px;
+  border-radius: 6px;
+  margin: 10px;
+  vertical-align: middle;
+  &-disabled {
+    background-color: aquamarine;
+  }
 }
 
 .starting-button {
-    width: 95%; border-radius: 40px; margin: 4px;
+  width: 95%;
+  border-radius: 40px;
+  margin: 4px;
+}
 
-  }
+.disabled {
+  filter: grayscale(0.85) brightness(0.9);
+}
 
-  .disabled {
-      filter: grayscale(0.85) brightness(0.9);
-  }
-
-  .current {
-    //   border: 3px white solid;
-    //   border-radius: 40px;
-    background-color: yellowgreen;
-  }
+.current {
+  //   border: 3px white solid;
+  //   border-radius: 40px;
+  background-color: yellowgreen;
+}
 
 .imgbox {
-background: 
-url('../../../assets/buttons/learnBtn.png');
-background-size: cover;
-width: 175px;
-height: 66px;
-// margin: 10px 0 0 10px;
-position: relative;
-float: left;
+  background: url("../../../assets/buttons/learnBtn.png");
+  background-size: cover;
+  width: 175px;
+  height: 66px;
+  // margin: 10px 0 0 10px;
+  position: relative;
+  float: left;
 }
 
 .txt-center-box {
-color: white;
-margin: 0;
-position: absolute;
-top: 50%;
-left: 50%;
-font-size: 20px;
-transform: translate(-50%, -50%);
+  color: white;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 20px;
+  transform: translate(-50%, -50%);
 }

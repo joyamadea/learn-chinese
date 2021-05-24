@@ -1,5 +1,6 @@
 ion-content {
-  --background: url('../../../assets/background.jpg') no-repeat center center / cover;
+  --background: url("../../../assets/background.jpg") no-repeat center center /
+    cover;
 }
 
 #container {
@@ -28,11 +29,12 @@ ion-content {
   &-title {
     font-size: 24px;
     font-weight: bold;
-    color: #D7AA2E
+    color: #d7aa2e;
   }
 }
 
 .starting-button {
-  width: 70%; border-radius: 40px; margin: auto
+  width: 70%;
+  border-radius: 40px;
+  margin: auto;
 }
-

@@ -19,71 +19,85 @@ export class CategoryPage implements OnInit {
   currLvl = 1;
   url: any;
 
-  constructor(private pinyinService: PinyinService,
-    private router: Router, private userService: UserService,
-    private db: AngularFireDatabase, private modalController: ModalController,
-    private storage: AngularFireStorage) { }
+  constructor(
+    private pinyinService: PinyinService,
+    private router: Router,
+    private userService: UserService,
+    private db: AngularFireDatabase,
+    private modalController: ModalController,
+    private storage: AngularFireStorage
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
-    this.pinyinService.getCategory().snapshotChanges().pipe(
-      map(changes => 
-       changes.map(c => ({ key: c.payload.key, ...c.payload.val()}))
-       )
-    ).subscribe(data => {
-      this.categories = data;
-      this.categories.forEach(element => {
-        let img = this.storage.ref(element.pic);
-        img.getDownloadURL().subscribe((Url) => {
-          element.url = Url;
-        })
-      });
-      this.checkUid();
-      console.log(this.categories);
-    }, (err) => {
-      console.log("err", err);
-    })
+    this.pinyinService
+      .getCategory()
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => ({ key: c.payload.key, ...c.payload.val() }))
+        )
+      )
+      .subscribe(
+        (data) => {
+          this.categories = data;
+          this.categories.forEach((element) => {
+            let img = this.storage.ref(element.pic);
+            img.getDownloadURL().subscribe((Url) => {
+              element.url = Url;
+            });
+          });
+          this.checkUid();
+          console.log(this.categories);
+        },
+        (err) => {
+          console.log('err', err);
+        }
+      );
   }
 
   checkUid() {
-    console.log("masuk check uid");
+    console.log('masuk check uid');
     this.userService.getUid().then((data) => {
       this.uid = data;
-      this.db.object('/users/' + this.uid).valueChanges().subscribe((data: any) => {
-        this.currLvl = data.level;
-        this.categories.forEach(element => {
-          if(element.key <= this.currLvl) {
-            element.available = true;
-          } else {
-            element.available = false;
+      this.db
+        .object('/users/' + this.uid)
+        .valueChanges()
+        .subscribe(
+          (data: any) => {
+            this.currLvl = data.level;
+            this.categories.forEach((element) => {
+              if (element.key <= this.currLvl) {
+                element.available = true;
+              } else {
+                element.available = false;
+              }
+            });
+            console.log('updated', this.categories);
+          },
+          (err) => {
+            console.log(err);
           }
-        });
-        console.log("updated", this.categories);
-      }, (err) => {
-        console.log(err);
-      })
-    })
-    
+        );
+    });
   }
 
   goBack() {
     this.router.navigate(['/home']);
   }
 
-  gotoLevels(cat){
-    this.router.navigate(['/learn',cat]);
+  gotoLevels(cat) {
+    this.router.navigate(['/learn', cat]);
   }
 
   async openModal() {
-    console.log("yo");
+    console.log('yo');
     const modal = await this.modalController.create({
       component: LevelPassPage,
       cssClass: 'alert-modal-css',
-      backdropDismiss: false
+      backdropDismiss: false,
     });
     await modal.present();
   }
-
 }

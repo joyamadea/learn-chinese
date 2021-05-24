@@ -1,36 +1,39 @@
 <ion-content fullscreen="true">
-  
   <div id="container">
-    <ion-row class="text-title ion-text-center" style="margin-top: 40%;">
-      <ion-col>
-        Learn Chinese
-      </ion-col>
+    <ion-row class="text-title ion-text-center" style="margin-top: 40%">
+      <ion-col> Learn Chinese </ion-col>
     </ion-row>
-    <ion-row >
+    <ion-row>
       <ion-col>
         <!-- <ion-button (click)="gotoCat()" class="boxes text-category" expand="block" color="verdigris">Learn</ion-button> -->
         <!-- <ion-item lines="none"> -->
-          <div class="ion-activatable ripple-parent starting-button">
-            <img src="assets/buttons/learnBtn.png" style="width : 100%" (click)="gotoCat()" >
-            <ion-ripple-effect></ion-ripple-effect>
-          </div>
-          
+        <div class="ion-activatable ripple-parent starting-button">
+          <img
+            src="assets/buttons/learnBtn.png"
+            style="width: 100%"
+            (click)="gotoCat()"
+          />
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+
         <!-- </ion-item> -->
       </ion-col>
     </ion-row>
-  
-    <ion-row style="margin-top: 10px;">
+
+    <ion-row style="margin-top: 10px">
       <ion-col>
         <!-- <ion-item lines="none"> -->
-          <div class="ion-activatable ripple-parent starting-button">
-            <img src="assets/buttons/practiceBtn.png" style="width : 100%" (click)="gotoCat()" >
-            <ion-ripple-effect></ion-ripple-effect>
-          </div>
+        <div class="ion-activatable ripple-parent starting-button">
+          <img
+            src="assets/buttons/practiceBtn.png"
+            style="width: 100%"
+            (click)="gotoCat()"
+          />
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
         <!-- </ion-item> -->
         <!-- <ion-button class="boxes text-category" expand="block" color="verdigris">Practice</ion-button> -->
       </ion-col>
-      
     </ion-row>
   </div>
-  
 </ion-content>

@@ -18,7 +18,7 @@ export class LearnPage implements OnInit {
   lvl: any;
   quiz: any;
   i: number;
-  array = [1,2,3,4,5,6,7,8,9,10];
+  array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   newArray = [];
   initialCount = 2;
   counter = 0;
@@ -45,32 +45,38 @@ export class LearnPage implements OnInit {
   ngOnInit() {
     // SPEECH PERMISSIONS
     this.speechRecognition.hasPermission().then((perms: boolean) => {
-      if(perms == false){
-        this.speechRecognition.requestPermission().then(() => {
-          console.log("granted");
-        }, (err) => {
-          console.log("denied")
-        });
+      if (perms == false) {
+        this.speechRecognition.requestPermission().then(
+          () => {
+            console.log('granted');
+          },
+          (err) => {
+            console.log('denied');
+          }
+        );
       }
-    })
+    });
 
     // FETCH QUIZ
-    this.pinyinService.getQuiz(this.cat).snapshotChanges().pipe(
-      map(changes => 
-       changes.map(c => ({ key: c.payload.key, ...c.payload.val()}))
-       )
-    ).subscribe(data => {
-      this.quiz = data;
-      // PUSHING TO ARRAY FOR RANDOMIZING INDEX
-      for (let index = 0; index < this.quiz.length-2; index++) {
-        // newArray contains indexes of questions
-        this.newArray.push(this.initialCount);
-        this.initialCount++;
-      }
-      console.log(data);
-      this.random();
-    });
-    
+    this.pinyinService
+      .getQuiz(this.cat)
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => ({ key: c.payload.key, ...c.payload.val() }))
+        )
+      )
+      .subscribe((data) => {
+        this.quiz = data;
+        // PUSHING TO ARRAY FOR RANDOMIZING INDEX
+        for (let index = 0; index < this.quiz.length - 2; index++) {
+          // newArray contains indexes of questions
+          this.newArray.push(this.initialCount);
+          this.initialCount++;
+        }
+        console.log(data);
+        this.random();
+      });
   }
 
   closeLearning() {
@@ -80,8 +86,8 @@ export class LearnPage implements OnInit {
   random() {
     // RANDOMIZING ARRAY CONTENTS
     let i = this.newArray.length;
-    while(i--){
-      let j = Math.floor(Math.random() * (i+1));
+    while (i--) {
+      let j = Math.floor(Math.random() * (i + 1));
       let tempIndex = this.newArray[i];
       this.newArray[i] = this.newArray[j];
       this.newArray[j] = tempIndex;
@@ -89,19 +95,19 @@ export class LearnPage implements OnInit {
     this.i = this.newArray[this.counter];
   }
 
-  wrongAnswer(i){
+  wrongAnswer(i) {
     // PUSHING WRONG ANSWER TO TEMPORARY ARRAY
     this.temp.push(i);
-    console.log("temp array", this.temp);
+    console.log('temp array', this.temp);
     this.next();
   }
 
   next() {
-    if(this.counter < this.newArray.length-1){
+    if (this.counter < this.newArray.length - 1) {
       this.counter++;
       this.i = this.newArray[this.counter];
     } else {
-      if(this.temp.length != 0){
+      if (this.temp.length != 0) {
         // REROLLING DECK
         this.counter = 0;
         this.newArray = this.temp;
@@ -110,7 +116,7 @@ export class LearnPage implements OnInit {
       } else {
         // FINISH QUIZ
         this.disableButton = true;
-        this.userService.updateLvl(this.cat+1);
+        this.userService.updateLvl(this.cat + 1);
         // ADD MODAL HERE
         this.modalFinished();
       }
@@ -123,8 +129,8 @@ export class LearnPage implements OnInit {
       cssClass: 'alert-modal-css',
       backdropDismiss: false,
       componentProps: {
-        'level': this.cat
-      }
+        level: this.cat,
+      },
     });
     await modal.present();
   }
@@ -132,7 +138,7 @@ export class LearnPage implements OnInit {
   async rightToast() {
     const toast = await this.toastController.create({
       message: 'Correct',
-      duration: 2000
+      duration: 2000,
     });
     toast.present();
   }
@@ -140,7 +146,7 @@ export class LearnPage implements OnInit {
   async wrongToast() {
     const toast = await this.toastController.create({
       message: 'Wrong',
-      duration: 2000
+      duration: 2000,
     });
     toast.present();
   }
@@ -156,33 +162,34 @@ export class LearnPage implements OnInit {
     let listened = false;
 
     // SPEECH RECOGNITION START LISTENING
-    this.speechRecognition.startListening(options).subscribe((matches: string[]) => {
-      console.log(matches);
-      // FIRST MATCH = ANSWER
-      this.answer = matches[0];
-      // IS ANSWER ACCORDING TO DB
-      if(this.answer == this.quiz[this.i].answer){
-        rightAnswer = true;
-      }
-      // ZONING
-      this.zone.run(() => {
-        if(rightAnswer) {
-          this.rightToast();
-          this.next();
-          listened = false;
-        } else if(!rightAnswer){
-          this.wrongToast();
-          this.wrongAnswer(this.i);
-          listened = false;
+    this.speechRecognition.startListening(options).subscribe(
+      (matches: string[]) => {
+        console.log(matches);
+        // FIRST MATCH = ANSWER
+        this.answer = matches[0];
+        // IS ANSWER ACCORDING TO DB
+        if (this.answer == this.quiz[this.i].answer) {
+          rightAnswer = true;
         }
-      })
-    }, (err)=> {
-      console.log("error speech", err);
-      listened = false;
-    });
+        // ZONING
+        this.zone.run(() => {
+          if (rightAnswer) {
+            this.rightToast();
+            this.next();
+            listened = false;
+          } else if (!rightAnswer) {
+            this.wrongToast();
+            this.wrongAnswer(this.i);
+            listened = false;
+          }
+        });
+      },
+      (err) => {
+        console.log('error speech', err);
+        listened = false;
+      }
+    );
   }
 
-  determineAnswer() {
-
-  }
+  determineAnswer() {}
 }
