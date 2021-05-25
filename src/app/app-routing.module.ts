@@ -13,27 +13,45 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'learn/:category',
+    path: 'test/:id',
     loadChildren: () =>
-      import('./pages/learn/learn.module').then((m) => m.LearnPageModule),
+      import('./pages/test/test.module').then((m) => m.TestPageModule),
   },
   {
-    path: 'category',
-    loadChildren: () => import('./pages/category/category.module').then( m => m.CategoryPageModule)
-  },  {
+    path: 'category/:type',
+    loadChildren: () =>
+      import('./pages/category/category.module').then(
+        (m) => m.CategoryPageModule
+      ),
+  },
+  {
     path: 'level-pass',
-    loadChildren: () => import('./modals/level-pass/level-pass.module').then( m => m.LevelPassPageModule)
+    loadChildren: () =>
+      import('./modals/level-pass/level-pass.module').then(
+        (m) => m.LevelPassPageModule
+      ),
   },
   {
     path: 'confirm-exit',
-    loadChildren: () => import('./modals/confirm-exit/confirm-exit.module').then( m => m.ConfirmExitPageModule)
+    loadChildren: () =>
+      import('./modals/confirm-exit/confirm-exit.module').then(
+        (m) => m.ConfirmExitPageModule
+      ),
   },
   {
     path: 'achievements',
-    loadChildren: () => import('./pages/achievements/achievements.module').then( m => m.AchievementsPageModule)
+    loadChildren: () =>
+      import('./pages/achievements/achievements.module').then(
+        (m) => m.AchievementsPageModule
+      ),
   },
-
-
+  {
+    path: 'practice/:category',
+    loadChildren: () =>
+      import('./pages/practice/practice.module').then(
+        (m) => m.PracticePageModule
+      ),
+  },
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { ConfirmExitPage } from 'src/app/modals/confirm-exit/confirm-exit.page';
@@ -19,6 +19,7 @@ export class CategoryPage implements OnInit {
   uid: any;
   currLvl = 1;
   url: any;
+  type: any;
 
   constructor(
     private pinyinService: PinyinService,
@@ -26,8 +27,12 @@ export class CategoryPage implements OnInit {
     private userService: UserService,
     private db: AngularFireDatabase,
     private modalController: ModalController,
-    private storage: AngularFireStorage
-  ) {}
+    private storage: AngularFireStorage,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.type = this.activatedRoute.snapshot.params['type'];
+    console.log('type', this.type);
+  }
 
   ngOnInit() {}
 
@@ -89,7 +94,11 @@ export class CategoryPage implements OnInit {
   }
 
   gotoLevels(cat) {
-    this.router.navigate(['/learn', cat]);
+    if (this.type == 'test') {
+      this.router.navigate(['/test', cat]);
+    } else if (this.type == 'practice') {
+      this.router.navigate(['/practice', cat]);
+    }
   }
 
   async openModal() {

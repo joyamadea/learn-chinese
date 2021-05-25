@@ -10,11 +10,11 @@ import { PinyinService } from 'src/app/services/pinyin.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-learn',
-  templateUrl: './learn.page.html',
-  styleUrls: ['./learn.page.scss'],
+  selector: 'app-test',
+  templateUrl: './test.page.html',
+  styleUrls: ['./test.page.scss'],
 })
-export class LearnPage implements OnInit {
+export class TestPage implements OnInit {
   cat: any;
   lvl: any;
   quiz: any;
@@ -39,7 +39,7 @@ export class LearnPage implements OnInit {
     private storage: AngularFireStorage,
     private toastController: ToastController
   ) {
-    this.cat = this.activatedRoute.snapshot.params['category'];
+    this.cat = this.activatedRoute.snapshot.params['id'];
     this.cat = Number(this.cat);
   }
 
@@ -85,6 +85,9 @@ export class LearnPage implements OnInit {
       component: ConfirmExitPage,
       cssClass: 'alert-modal-css',
       backdropDismiss: false,
+      componentProps: {
+        type: 'test',
+      },
     });
     await modal.present();
   }
@@ -136,6 +139,7 @@ export class LearnPage implements OnInit {
       backdropDismiss: false,
       componentProps: {
         level: this.cat,
+        type: 'test',
       },
     });
     await modal.present();

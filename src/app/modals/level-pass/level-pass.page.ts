@@ -9,6 +9,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class LevelPassPage implements OnInit {
   @Input() level;
+  @Input() type;
   constructor(
     private modalController: ModalController,
     private router: Router
@@ -19,12 +20,16 @@ export class LevelPassPage implements OnInit {
   }
 
   gotoHome() {
-    this.router.navigate(['/category']);
+    if (this.type == 'practice') {
+      this.router.navigate(['/category/practice']);
+    } else if (this.type == 'test') {
+      this.router.navigate(['/category/test']);
+    }
     this.modalController.dismiss();
   }
 
   retry() {
-    this.router.navigate(['/learn/' + this.level]);
+    this.router.navigate(['/test/' + this.level]);
     this.modalController.dismiss();
     this.ngOnInit();
   }

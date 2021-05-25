@@ -18,6 +18,7 @@ import { environment } from 'src/environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +37,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
     SpeechRecognition,
     StatusBar,
     ScreenOrientation,
+    TextToSpeech,
   ],
   bootstrap: [AppComponent],
 })

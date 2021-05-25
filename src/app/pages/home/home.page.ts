@@ -29,8 +29,12 @@ export class HomePage {
     });
   }
 
-  gotoCat() {
-    this.router.navigate(['/category']);
+  gotoCat(type) {
+    if (type == 'test') {
+      this.router.navigate(['/category', 'test']);
+    } else if (type == 'practice') {
+      this.router.navigate(['/category', 'practice']);
+    }
   }
 
   gotoAchievements() {

@@ -19,8 +19,8 @@
         size="6"
       >
         <div
-          *ngIf="category.available"
-          [ngClass]="{ 'current': currLvl == category.key}"
+          *ngIf="category.available || type == 'practice'"
+          [ngClass]="{ 'current': currLvl == category.key && type == 'test'}"
           class="ion-activatable ripple-parent starting-button"
         >
           <img
@@ -30,7 +30,10 @@
           />
           <ion-ripple-effect></ion-ripple-effect>
         </div>
-        <div *ngIf="!category.available" class="disabled starting-button">
+        <div
+          *ngIf="!category.available && type == 'test'"
+          class="disabled starting-button"
+        >
           <img [src]="category.url" style="width: 100%" />
         </div>
       </ion-col>
