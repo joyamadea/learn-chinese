@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { ModalController, ToastController } from '@ionic/angular';
 import { count, map } from 'rxjs/operators';
+import { ConfirmExitPage } from 'src/app/modals/confirm-exit/confirm-exit.page';
 import { LevelPassPage } from 'src/app/modals/level-pass/level-pass.page';
 import { PinyinService } from 'src/app/services/pinyin.service';
 import { UserService } from 'src/app/services/user.service';
@@ -79,8 +80,13 @@ export class LearnPage implements OnInit {
       });
   }
 
-  closeLearning() {
-    this.router.navigate(['/category']);
+  async closeLearning() {
+    const modal = await this.modalController.create({
+      component: ConfirmExitPage,
+      cssClass: 'alert-modal-css',
+      backdropDismiss: false,
+    });
+    await modal.present();
   }
 
   random() {

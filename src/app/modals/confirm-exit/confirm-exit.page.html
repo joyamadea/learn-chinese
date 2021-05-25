@@ -9,14 +9,31 @@
       Are you sure you want to exit?
     </ion-col>
 
-    <ion-col size="12">
+    <ion-col size="6">
       <div
-        class="ion-activatable ripple-parent starting-button"
-        (click)="closeModal()"
+        class="ion-activatable ripple-parent starting-button ion-text-right"
+        (click)="cancel()"
       >
-        <img src="assets/buttons/learnBtn.png" />
+        <img src="assets/buttons/learnBtn.png" class="ion-text-right" />
         <ion-ripple-effect></ion-ripple-effect>
       </div>
+
+     
     </ion-col>
+    <ion-col size="6">
+      <div
+      class="ion-activatable ripple-parent starting-button ion-text-left"
+      (click)="confirmExit()"
+    >
+      <img src="assets/buttons/learnBtn.png" />
+      <ion-ripple-effect></ion-ripple-effect>
+    </div>
+    </ion-col>
+    <!-- <ion-col size="6">
+      <div class="ion-activatable ripple-parent starting-button" (click)="closeModal()">
+        <img src="assets/buttons/circular/retry.png">
+        <ion-ripple-effect></ion-ripple-effect>
+      </div>
+    </ion-col> -->
   </ion-row>
 </ion-content>

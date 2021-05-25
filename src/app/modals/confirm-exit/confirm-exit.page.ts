@@ -15,8 +15,12 @@ export class ConfirmExitPage implements OnInit {
 
   ngOnInit() {}
 
-  closeModal() {
+  confirmExit() {
     this.router.navigate(['/category']);
+    this.modalController.dismiss();
+  }
+
+  cancel() {
     this.modalController.dismiss();
   }
 }
