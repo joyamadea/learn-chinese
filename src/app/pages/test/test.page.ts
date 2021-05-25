@@ -16,27 +16,21 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class TestPage implements OnInit {
   cat: any;
-  lvl: any;
   quiz: any;
   i: number;
-  array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  newArray = [];
+  indexArray = [];
   initialCount = 2;
   counter = 0;
   temp = [];
-  disableButton = false;
   answer: any;
-  url: any;
 
   constructor(
     private speechRecognition: SpeechRecognition,
     private pinyinService: PinyinService,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private zone: NgZone,
     private modalController: ModalController,
-    private storage: AngularFireStorage,
     private toastController: ToastController
   ) {
     this.cat = this.activatedRoute.snapshot.params['id'];
@@ -44,20 +38,10 @@ export class TestPage implements OnInit {
   }
 
   ngOnInit() {
-    // SPEECH PERMISSIONS
-    this.speechRecognition.hasPermission().then((perms: boolean) => {
-      if (perms == false) {
-        this.speechRecognition.requestPermission().then(
-          () => {
-            console.log('granted');
-          },
-          (err) => {
-            console.log('denied');
-          }
-        );
-      }
-    });
+    this.checkSpeechPermission();
+  }
 
+  ionViewWillEnter() {
     // FETCH QUIZ
     this.pinyinService
       .getQuiz(this.cat)
@@ -71,13 +55,29 @@ export class TestPage implements OnInit {
         this.quiz = data;
         // PUSHING TO ARRAY FOR RANDOMIZING INDEX
         for (let index = 0; index < this.quiz.length - 2; index++) {
-          // newArray contains indexes of questions
-          this.newArray.push(this.initialCount);
+          // indexArray contains indexes of the questions
+          this.indexArray.push(this.initialCount);
           this.initialCount++;
         }
         console.log(data);
         this.random();
       });
+  }
+
+  checkSpeechPermission() {
+    // SPEECH PERMISSIONS
+    this.speechRecognition.hasPermission().then((perms: boolean) => {
+      if (perms == false) {
+        this.speechRecognition.requestPermission().then(
+          () => {
+            console.log('granted');
+          },
+          (err) => {
+            console.log('denied');
+          }
+        );
+      }
+    });
   }
 
   async closeLearning() {
@@ -94,14 +94,14 @@ export class TestPage implements OnInit {
 
   random() {
     // RANDOMIZING ARRAY CONTENTS
-    let i = this.newArray.length;
+    let i = this.indexArray.length;
     while (i--) {
       let j = Math.floor(Math.random() * (i + 1));
-      let tempIndex = this.newArray[i];
-      this.newArray[i] = this.newArray[j];
-      this.newArray[j] = tempIndex;
+      let tempIndex = this.indexArray[i];
+      this.indexArray[i] = this.indexArray[j];
+      this.indexArray[j] = tempIndex;
     }
-    this.i = this.newArray[this.counter];
+    this.i = this.indexArray[this.counter];
   }
 
   wrongAnswer(i) {
@@ -112,19 +112,18 @@ export class TestPage implements OnInit {
   }
 
   next() {
-    if (this.counter < this.newArray.length - 1) {
+    if (this.counter < this.indexArray.length - 1) {
       this.counter++;
-      this.i = this.newArray[this.counter];
+      this.i = this.indexArray[this.counter];
     } else {
       if (this.temp.length != 0) {
         // REROLLING DECK
         this.counter = 0;
-        this.newArray = this.temp;
+        this.indexArray = this.temp;
         this.temp = [];
         this.random();
       } else {
         // FINISH QUIZ
-        this.disableButton = true;
         this.userService.updateLvl(this.cat + 1);
         // ADD MODAL HERE
         this.modalFinished();

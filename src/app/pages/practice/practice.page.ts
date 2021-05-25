@@ -18,16 +18,15 @@ import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 })
 export class PracticePage implements OnInit {
   cat: any;
-  lvl: any;
   quiz: any;
   i: number;
-  array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  newArray = [];
+  indexArray = [];
   initialCount = 2;
   counter = 0;
   temp = [];
-  disableButton = false;
   answer: any;
+
+  // testing
   url: any;
 
   constructor(
@@ -38,13 +37,18 @@ export class PracticePage implements OnInit {
     private zone: NgZone,
     private modalController: ModalController,
     private toastController: ToastController,
-    private tts: TextToSpeech
+    private tts: TextToSpeech,
+    private storage: AngularFireStorage
   ) {
     this.cat = this.activatedRoute.snapshot.params['category'];
     this.cat = Number(this.cat);
   }
 
   ngOnInit() {
+    this.checkSpeechPermission();
+  }
+
+  ionViewWillEnter() {
     // FETCH QUIZ
     this.pinyinService
       .getQuiz(this.cat)
@@ -58,13 +62,35 @@ export class PracticePage implements OnInit {
         this.quiz = data;
         // PUSHING TO ARRAY FOR RANDOMIZING INDEX
         for (let index = 0; index < this.quiz.length - 2; index++) {
-          // newArray contains indexes of questions
-          this.newArray.push(this.initialCount);
+          // indexArray contains indexes of the questions
+          this.indexArray.push(this.initialCount);
           this.initialCount++;
         }
         console.log(data);
         this.random();
       });
+
+    // testing image
+    let img = this.storage.ref('/questions/birthday-cake.svg');
+    img.getDownloadURL().subscribe((Url) => {
+      this.url = Url;
+    });
+  }
+
+  checkSpeechPermission() {
+    // SPEECH PERMISSIONS
+    this.speechRecognition.hasPermission().then((perms: boolean) => {
+      if (perms == false) {
+        this.speechRecognition.requestPermission().then(
+          () => {
+            console.log('granted');
+          },
+          (err) => {
+            console.log('denied');
+          }
+        );
+      }
+    });
   }
 
   async closeLearning() {
@@ -81,30 +107,29 @@ export class PracticePage implements OnInit {
 
   random() {
     // RANDOMIZING ARRAY CONTENTS
-    let i = this.newArray.length;
+    let i = this.indexArray.length;
     while (i--) {
       let j = Math.floor(Math.random() * (i + 1));
-      let tempIndex = this.newArray[i];
-      this.newArray[i] = this.newArray[j];
-      this.newArray[j] = tempIndex;
+      let tempIndex = this.indexArray[i];
+      this.indexArray[i] = this.indexArray[j];
+      this.indexArray[j] = tempIndex;
     }
-    this.i = this.newArray[this.counter];
+    this.i = this.indexArray[this.counter];
   }
 
   next() {
-    if (this.counter < this.newArray.length - 1) {
+    if (this.counter < this.indexArray.length - 1) {
       this.counter++;
-      this.i = this.newArray[this.counter];
+      this.i = this.indexArray[this.counter];
     } else {
       if (this.temp.length != 0) {
         // REROLLING DECK
         this.counter = 0;
-        this.newArray = this.temp;
+        this.indexArray = this.temp;
         this.temp = [];
         this.random();
       } else {
         // FINISH QUIZ
-        this.disableButton = true;
         this.userService.updateLvl(this.cat + 1);
         // ADD MODAL HERE
         this.modalFinished();
@@ -113,7 +138,6 @@ export class PracticePage implements OnInit {
   }
 
   texttospeech(word) {
-    console.log('word', word);
     this.tts
       .speak({
         text: word,
@@ -176,6 +200,7 @@ export class PracticePage implements OnInit {
       backdropDismiss: false,
       componentProps: {
         level: this.cat,
+        type: 'practice',
       },
     });
     await modal.present();
