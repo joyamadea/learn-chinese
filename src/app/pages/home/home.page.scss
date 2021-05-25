@@ -1,3 +1,8 @@
+ion-content {
+  --background: url("../../../assets/background.jpg") no-repeat center center /
+    cover;
+}
+
 #container {
   text-align: center;
 
@@ -5,7 +10,7 @@
   left: 0;
   right: 0;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-75%);
 }
 
 .boxes {
@@ -24,6 +29,12 @@
   &-title {
     font-size: 24px;
     font-weight: bold;
-    color: #D7AA2E
+    color: #d7aa2e;
   }
+}
+
+.starting-button {
+  width: 70%;
+  border-radius: 40px;
+  margin: auto;
 }

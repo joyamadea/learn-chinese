@@ -15,7 +15,9 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
-import { AngularFireDatabaseModule } from '@angular/fire/database'
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,12 +28,14 @@ import { AngularFireDatabaseModule } from '@angular/fire/database'
     AppRoutingModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     HTTP,
     SpeechRecognition,
+    StatusBar,
+    ScreenOrientation,
   ],
   bootstrap: [AppComponent],
 })
