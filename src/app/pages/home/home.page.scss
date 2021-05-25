@@ -2,7 +2,12 @@ ion-content {
   --background: url("../../../assets/background.jpg") no-repeat center center /
     cover;
 }
-
+ion-toolbar {
+  --background: transparent;
+}
+.header-md::after {
+  display: none;
+}
 #container {
   text-align: center;
 
@@ -25,11 +30,6 @@ ion-content {
     font-weight: bold;
     color: white;
     text-transform: capitalize;
-  }
-  &-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #d7aa2e;
   }
 }
 

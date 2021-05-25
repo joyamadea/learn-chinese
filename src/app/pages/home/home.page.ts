@@ -32,4 +32,8 @@ export class HomePage {
   gotoCat() {
     this.router.navigate(['/category']);
   }
+
+  gotoAchievements() {
+    this.router.navigate(['/achievements']);
+  }
 }

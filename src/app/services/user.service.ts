@@ -1,15 +1,23 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+import { Category } from '../models/category';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  private categoryPath = '/category';
+  categoryRef: AngularFireList<Category> = null;
+  userRef: AngularFireList<User> = null;
+
   constructor(
     private fireAuth: AngularFireAuth,
     private db: AngularFireDatabase
-  ) {}
+  ) {
+    this.categoryRef = db.list(this.categoryPath);
+  }
 
   signInAnonymously() {
     return new Promise<any>((resolve, reject) => {
@@ -37,6 +45,11 @@ export class UserService {
         }
       );
     });
+  }
+
+  getUserAchievements(uid): AngularFireList<User> {
+    this.userRef = this.db.list('/users/' + uid + '/achievements');
+    return this.userRef;
   }
 
   create(id): any {

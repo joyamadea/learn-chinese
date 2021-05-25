@@ -28,6 +28,10 @@ const routes: Routes = [
     path: 'confirm-exit',
     loadChildren: () => import('./modals/confirm-exit/confirm-exit.module').then( m => m.ConfirmExitPageModule)
   },
+  {
+    path: 'achievements',
+    loadChildren: () => import('./pages/achievements/achievements.module').then( m => m.AchievementsPageModule)
+  },
 
 
 ];

@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>achievements</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="achievements">
+  <ion-row>
+    <ion-col>
+      <div *ngFor="let a of achievements">{{ a.details.name }}</div>
+    </ion-col>
+  </ion-row>
+</ion-content>
