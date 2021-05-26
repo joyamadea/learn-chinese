@@ -83,8 +83,9 @@ export class CategoryPage implements OnInit {
         .subscribe(
           (data: any) => {
             this.currLvl = data.level;
+            let result = data.level.split(';');
             this.categories.forEach((element) => {
-              if (element.key <= this.currLvl) {
+              if (result.includes(element.key.toString())) {
                 element.available = true;
               } else {
                 element.available = false;

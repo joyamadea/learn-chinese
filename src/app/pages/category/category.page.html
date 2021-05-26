@@ -40,7 +40,10 @@
           style="margin-bottom: 10px"
         >
           <ion-col size="6" class="align-self-center">
-            <div style="align-self: center">
+            <div style="align-self: center" *ngIf="category.available">
+              <img style="width: 25%" src="./assets/s1.png" />
+            </div>
+            <div style="align-self: center" *ngIf="!category.available">
               <img style="width: 25%" src="./assets/s2.png" />
             </div>
           </ion-col>

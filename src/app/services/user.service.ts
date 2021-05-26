@@ -60,7 +60,7 @@ export class UserService {
     other.once('value', (snapshot) => {
       if (!snapshot.hasChild(id)) {
         body = {
-          level: 1,
+          level: 'null',
         };
         return userRef.set(id, body);
       } else {
@@ -80,12 +80,28 @@ export class UserService {
         .valueChanges()
         .subscribe((data: any) => {
           const currLvl = data.level;
-          if (currLvl == lvl - 1) {
-            let body = {
-              level: lvl,
+          const result = data.level.split(';');
+          let body;
+          if (result[0] == 'null') {
+            const newLvl = lvl.toString();
+            body = {
+              level: newLvl,
             };
-            return userRef.set(id, body);
+          } else {
+            if (!result.includes(lvl.toString())) {
+              const newLvl = data.level + ';' + lvl.toString();
+              body = {
+                level: newLvl,
+              };
+            }
           }
+          return userRef.set(id, body);
+          // if (currLvl == lvl - 1) {
+          //   let body = {
+          //     level: lvl,
+          //   };
+          //   return userRef.set(id, body);
+          // }
         });
     });
   }
