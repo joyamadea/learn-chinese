@@ -23,6 +23,7 @@
         <img src="assets/square.png" style="width: 50%" />
         <div class="centered padding-10-percent">
           <span class="hanzi">{{ quiz[i].answer }}</span> <br />
+          <img [src]="quiz[i].url" width="50%" /> <br />
           <!-- <ion-icon [src]="url" color="warning"></ion-icon> <br> -->
           {{quiz[i].trans }}
         </div>
@@ -31,7 +32,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-row>
+  <!-- <ion-row>
     <ion-col>
       <div class="ion-activatable ripple-parent starting-button">
         <img
@@ -42,7 +43,7 @@
         <ion-ripple-effect></ion-ripple-effect>
       </div>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 
   <!-- TESTING WRONG/RIGHT ANSWER -->
   <ion-row>

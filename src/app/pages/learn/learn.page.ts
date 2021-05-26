@@ -40,7 +40,7 @@ export class LearnPage implements OnInit {
     private tts: TextToSpeech,
     private storage: AngularFireStorage
   ) {
-    this.cat = this.activatedRoute.snapshot.params['category'];
+    this.cat = this.activatedRoute.snapshot.params['id'];
     this.cat = Number(this.cat);
   }
 
@@ -60,6 +60,13 @@ export class LearnPage implements OnInit {
       )
       .subscribe((data) => {
         this.quiz = data;
+
+        this.quiz.forEach((element) => {
+          let img = this.storage.ref(element.pic);
+          img.getDownloadURL().subscribe((Url) => {
+            element.url = Url;
+          });
+        });
         // PUSHING TO ARRAY FOR RANDOMIZING INDEX
         for (let index = 0; index < this.quiz.length - 2; index++) {
           // indexArray contains indexes of the questions
@@ -99,7 +106,7 @@ export class LearnPage implements OnInit {
       cssClass: 'alert-modal-css',
       backdropDismiss: false,
       componentProps: {
-        type: 'practice',
+        type: 'learn',
       },
     });
     await modal.present();

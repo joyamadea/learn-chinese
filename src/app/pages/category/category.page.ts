@@ -20,6 +20,8 @@ export class CategoryPage implements OnInit {
   currLvl = 1;
   url: any;
   type: any;
+  scoreArray = Array(3);
+  loaded = false;
 
   constructor(
     private pinyinService: PinyinService,
@@ -53,7 +55,12 @@ export class CategoryPage implements OnInit {
             img.getDownloadURL().subscribe((Url) => {
               element.url = Url;
             });
+            if (element.key == this.categories.length) {
+              this.loaded = true;
+              console.log(this.loaded);
+            }
           });
+
           this.checkUid();
           console.log(this.categories);
         },
@@ -63,6 +70,9 @@ export class CategoryPage implements OnInit {
       );
   }
 
+  ionViewWillLeave() {
+    this.loaded = false;
+  }
   checkUid() {
     console.log('masuk check uid');
     this.userService.getUid().then((data) => {
@@ -98,6 +108,8 @@ export class CategoryPage implements OnInit {
       this.router.navigate(['/test', cat]);
     } else if (this.type == 'practice') {
       this.router.navigate(['/practice', cat]);
+    } else if (this.type == 'learn') {
+      this.router.navigate(['/learn', cat]);
     }
   }
 

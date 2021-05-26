@@ -26,6 +26,7 @@ ion-toolbar {
   width: 90%;
   border-radius: 40px;
   margin: 4px;
+  margin-bottom: 0px;
 }
 
 .disabled {
@@ -54,4 +55,11 @@ ion-toolbar {
   left: 50%;
   font-size: 20px;
   transform: translate(-50%, -50%);
+}
+
+.badge-notif {
+  opacity: 0.9;
+  border-radius: 50%;
+  width: 22px;
+  margin: 10px;
 }

@@ -23,6 +23,9 @@ export class TestPage implements OnInit {
   counter = 0;
   temp = [];
   answer: any;
+  score = 0;
+  scoreArray = Array();
+  altAnswer: any;
 
   constructor(
     private speechRecognition: SpeechRecognition,
@@ -31,7 +34,8 @@ export class TestPage implements OnInit {
     private userService: UserService,
     private zone: NgZone,
     private modalController: ModalController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private storage: AngularFireStorage
   ) {
     this.cat = this.activatedRoute.snapshot.params['id'];
     this.cat = Number(this.cat);
@@ -53,6 +57,15 @@ export class TestPage implements OnInit {
       )
       .subscribe((data) => {
         this.quiz = data;
+        this.scoreArray = Array(this.quiz.length - 2);
+
+        this.quiz.forEach((element) => {
+          let img = this.storage.ref(element.pic);
+          img.getDownloadURL().subscribe((Url) => {
+            element.url = Url;
+          });
+        });
+
         // PUSHING TO ARRAY FOR RANDOMIZING INDEX
         for (let index = 0; index < this.quiz.length - 2; index++) {
           // indexArray contains indexes of the questions
@@ -176,13 +189,18 @@ export class TestPage implements OnInit {
         console.log(matches);
         // FIRST MATCH = ANSWER
         this.answer = matches[0];
+        this.altAnswer = matches[1];
         // IS ANSWER ACCORDING TO DB
-        if (this.answer == this.quiz[this.i].answer) {
+        if (
+          this.answer == this.quiz[this.i].answer ||
+          this.altAnswer == this.quiz[this.i].answer
+        ) {
           rightAnswer = true;
         }
         // ZONING
         this.zone.run(() => {
           if (rightAnswer) {
+            this.score++;
             this.rightToast();
             this.next();
             listened = false;

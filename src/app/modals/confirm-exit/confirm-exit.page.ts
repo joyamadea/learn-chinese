@@ -24,6 +24,8 @@ export class ConfirmExitPage implements OnInit {
       this.router.navigate(['/category/practice']);
     } else if (this.type == 'test') {
       this.router.navigate(['/category/test']);
+    } else if (this.type == 'learn') {
+      this.router.navigate(['/category/learn']);
     }
 
     this.modalController.dismiss();

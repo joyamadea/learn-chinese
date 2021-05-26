@@ -12,17 +12,16 @@
 
 <ion-content class="ion-padding" fullscreen="true">
   <div>
-    <ion-row class="ion-align-items-center">
+    <ion-row
+      class="ion-align-items-center ion-justify-content-center"
+      *ngIf="loaded"
+    >
       <ion-col
         class="ion-text-center ion-no-padding"
         *ngFor="let category of categories"
         size="6"
       >
-        <div
-          *ngIf="category.available || type == 'practice'"
-          [ngClass]="{ 'current': currLvl == category.key && type == 'test'}"
-          class="ion-activatable ripple-parent starting-button"
-        >
+        <div class="ion-activatable ripple-parent starting-button">
           <img
             [src]="category.url"
             style="width: 100%"
@@ -30,12 +29,22 @@
           />
           <ion-ripple-effect></ion-ripple-effect>
         </div>
-        <div
+        <!-- <div
           *ngIf="!category.available && type == 'test'"
           class="disabled starting-button"
         >
           <img [src]="category.url" style="width: 100%" />
-        </div>
+        </div> -->
+        <ion-row
+          class="ion-justify-content-center ion-align-items-center"
+          style="margin-bottom: 10px"
+        >
+          <ion-col size="6" class="align-self-center">
+            <div style="align-self: center">
+              <img style="width: 25%" src="./assets/s2.png" />
+            </div>
+          </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
   </div>
