@@ -61,3 +61,27 @@
     </ion-col>
   </ion-row>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row class="ion-justify-content-center ion-margin-horizontal">
+      <ion-col size="1" *ngFor="let x of scoreArray; let i = index">
+        <img
+          *ngIf="i < score && score != 0"
+          style="width: 100%"
+          src="./assets/s1.png"
+        />
+
+        <img
+          *ngIf="i >= score || score == 0"
+          style="width: 100%"
+          src="./assets/s2.png"
+        />
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+
+  <!-- <div *ngFor="let x of quiz" style="float: left">
+    <img style="width: 40%" src="./assets/s1.png" />
+  </div> -->
+</ion-footer>

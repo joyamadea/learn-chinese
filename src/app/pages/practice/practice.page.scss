@@ -14,6 +14,10 @@ ion-toolbar {
   display: none;
 }
 
+.footer-md::before {
+  display: none;
+}
+
 .option-box {
   background-color: goldenrod;
   padding: 20px;

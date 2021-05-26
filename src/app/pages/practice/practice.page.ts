@@ -25,6 +25,8 @@ export class PracticePage implements OnInit {
   counter = 0;
   temp = [];
   answer: any;
+  score = 0;
+  scoreArray = Array();
 
   // testing
   url: any;
@@ -60,6 +62,9 @@ export class PracticePage implements OnInit {
       )
       .subscribe((data) => {
         this.quiz = data;
+        this.scoreArray = Array(this.quiz.length - 2);
+        // this.scoreArray = Array(15);
+        console.log(this.scoreArray);
         // PUSHING TO ARRAY FOR RANDOMIZING INDEX
         for (let index = 0; index < this.quiz.length - 2; index++) {
           // indexArray contains indexes of the questions
@@ -177,6 +182,7 @@ export class PracticePage implements OnInit {
         // ZONING
         this.zone.run(() => {
           if (rightAnswer) {
+            this.scoring();
             this.rightToast();
             this.next();
             listened = false;
@@ -191,6 +197,10 @@ export class PracticePage implements OnInit {
         listened = false;
       }
     );
+  }
+
+  scoring() {
+    this.score++;
   }
 
   async modalFinished() {
