@@ -1,0 +1,63 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="closeLearning()" slot="start" fill="clear">
+        <img src="./assets/buttons/circular/close.png" />
+        <ion-icon name="close" slot="icon-only" color="white"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-title class="text-title" text-center>Level</ion-title> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="quiz" fullscreen="true">
+  <!-- TESTING IMAGE -->
+  <!-- <img [src]="url" /> -->
+
+  <ion-row>
+    <ion-col>
+      <div
+        class="container ion-activatable ripple-parent"
+        (click)="texttospeech(quiz[i].answer)"
+      >
+        <img src="assets/square.png" style="width: 50%" />
+        <div class="centered padding-10-percent">
+          <span class="hanzi">{{ quiz[i].answer }}</span> <br />
+          <!-- <ion-icon [src]="url" color="warning"></ion-icon> <br> -->
+          {{quiz[i].trans }}
+        </div>
+        <ion-ripple-effect></ion-ripple-effect>
+      </div>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <div class="ion-activatable ripple-parent starting-button">
+        <img
+          src="assets/buttons/speakBtn.png"
+          style="width: 100%"
+          (click)="startSpeech()"
+        />
+        <ion-ripple-effect></ion-ripple-effect>
+      </div>
+    </ion-col>
+  </ion-row>
+
+  <!-- TESTING WRONG/RIGHT ANSWER -->
+  <ion-row>
+    <ion-col>
+      <ion-button
+        (click)="wrongAnswer(i)"
+        expand="full"
+        class="ion-text-capitalize"
+        >wrong</ion-button
+      >
+    </ion-col>
+    <ion-col>
+      <ion-button (click)="next()" expand="full" class="ion-text-capitalize"
+        >next</ion-button
+      >
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -52,6 +52,11 @@ const routes: Routes = [
         (m) => m.PracticePageModule
       ),
   },
+  {
+    path: 'learn/:id',
+    loadChildren: () =>
+      import('./pages/learn/learn.module').then((m) => m.LearnPageModule),
+  },
 ];
 
 @NgModule({

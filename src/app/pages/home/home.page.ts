@@ -31,9 +31,11 @@ export class HomePage {
 
   gotoCat(type) {
     if (type == 'test') {
-      this.router.navigate(['/category', 'test']);
+      this.router.navigate(['/category', type]);
     } else if (type == 'practice') {
-      this.router.navigate(['/category', 'practice']);
+      this.router.navigate(['/category', type]);
+    } else if (type == 'learn') {
+      this.router.navigate(['/category', type]);
     }
   }
 
