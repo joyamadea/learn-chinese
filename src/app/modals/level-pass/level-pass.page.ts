@@ -16,21 +16,16 @@ export class LevelPassPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.level);
+    console.log(this.type);
   }
 
   gotoHome() {
-    if (this.type == 'practice') {
-      this.router.navigate(['/category/practice']);
-    } else if (this.type == 'test') {
-      this.router.navigate(['/category/test']);
-    }
+    this.router.navigate(['/category', this.type]);
     this.modalController.dismiss();
   }
 
   retry() {
-    this.router.navigate(['/test/' + this.level]);
+    this.router.navigate(['/main/' + this.type + this.level]);
     this.modalController.dismiss();
-    this.ngOnInit();
   }
 }

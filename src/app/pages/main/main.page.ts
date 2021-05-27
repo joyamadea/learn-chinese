@@ -122,28 +122,46 @@ export class MainPage implements OnInit {
 
   wrongAnswer(i) {
     // PUSHING WRONG ANSWER TO TEMPORARY ARRAY
-    this.temp.push(i);
-    console.log('temp array', this.temp);
-    this.next();
+    // this.temp.push(i);
+    // console.log('temp array', this.temp);
+    if (this.type == 'test') {
+      this.next();
+    }
+  }
+
+  prev() {
+    if (this.counter > 0) {
+      this.counter--;
+      this.i = this.indexArray[this.counter];
+    }
   }
 
   next() {
+    if (this.type == 'learn') {
+      this.score++;
+    }
     if (this.counter < this.indexArray.length - 1) {
       this.counter++;
       this.i = this.indexArray[this.counter];
     } else {
-      if (this.temp.length != 0) {
-        // REROLLING DECK
-        this.counter = 0;
-        this.indexArray = this.temp;
-        this.temp = [];
-        this.random();
-      } else {
-        // FINISH QUIZ
-        this.userService.updateLvl(this.cat, 'test');
-        // ADD MODAL HERE
-        this.modalFinished();
-      }
+      // if (this.temp.length != 0) {
+      //   // REROLLING DECK
+      //   this.counter = 0;
+      //   this.indexArray = this.temp;
+      //   this.temp = [];
+      //   this.random();
+      // } else {
+      //   // FINISH QUIZ
+      //   this.userService.updateLvl(this.cat, 'test');
+      //   // ADD MODAL HERE
+      //   this.modalFinished();
+      // }
+
+      // NO REPEATING
+      // FINISH QUIZ
+      this.userService.updateLvl(this.cat, this.type);
+      // ADD MODAL HERE
+      this.modalFinished();
     }
   }
 
@@ -154,7 +172,7 @@ export class MainPage implements OnInit {
       backdropDismiss: false,
       componentProps: {
         level: this.cat,
-        type: 'test',
+        type: this.type,
       },
     });
     await modal.present();
@@ -203,7 +221,6 @@ export class MainPage implements OnInit {
         // ZONING
         this.zone.run(() => {
           if (rightAnswer) {
-            this.score++;
             this.rightToast();
             this.next();
             listened = false;

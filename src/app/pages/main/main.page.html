@@ -21,7 +21,7 @@
             class="container ion-activatable ripple-parent"
             (click)="texttospeech(quiz[i].answer)"
           >
-            <img src="assets/square.png" />
+            <img src="assets/square.png" style="width: 75%" />
             <div class="centered padding-10-percent">
               <span class="hanzi">{{ quiz[i].answer }}</span> <br />
               <img [src]="quiz[i].url" width="50%" /> <br />
@@ -33,7 +33,7 @@
 
           <!-- TEST -->
           <div class="container" *ngIf="type == 'test'">
-            <img src="assets/square.png" style="width: 50%" />
+            <img src="assets/square.png" style="width: 75%" />
             <div class="centered padding-10-percent">
               <span class="hanzi">{{ quiz[i].answer }}</span> <br />
               <img [src]="quiz[i].url" width="50%" /> <br />
@@ -45,7 +45,7 @@
       </ion-row>
 
       <ion-row>
-        <ion-col>
+        <ion-col *ngIf="type != 'learn'">
           <div class="ion-activatable ripple-parent starting-button">
             <img
               *ngIf="type == 'test'"
@@ -61,6 +61,30 @@
             />
             <ion-ripple-effect></ion-ripple-effect>
           </div>
+        </ion-col>
+        <ion-col *ngIf="type == 'learn'">
+          <ion-row>
+            <ion-col>
+              <div class="ion-activatable ripple-parent next-button">
+                <img
+                  src="assets/buttons/prevBtn.png"
+                  style="width: 100%"
+                  (click)="prev()"
+                />
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div class="ion-activatable ripple-parent next-button">
+                <img
+                  src="assets/buttons/nextBtn.png"
+                  style="width: 100%"
+                  (click)="next()"
+                />
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
     </ion-grid>

@@ -36,7 +36,7 @@ ion-toolbar {
   position: absolute;
   left: 0;
   right: 0;
-  top: 55%;
+  top: 63%;
   transform: translateY(-75%);
 }
 
@@ -44,6 +44,7 @@ ion-toolbar {
   //   width: 50%;
   position: relative;
   text-align: center;
+  border-radius: 30px;
 }
 
 /* Centered text */
@@ -62,6 +63,12 @@ ion-toolbar {
 
 .starting-button {
   width: 45%;
+  border-radius: 40px;
+  margin: auto;
+}
+
+.next-button {
+  width: 80%;
   border-radius: 40px;
   margin: auto;
 }
