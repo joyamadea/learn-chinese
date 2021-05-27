@@ -1,5 +1,5 @@
 ion-content {
-  --background: url("../../../assets/background.jpg") no-repeat center center /
+  --background: url("../../../assets/children-bg.png") no-repeat center center /
     cover;
 }
 ion-toolbar {
@@ -14,7 +14,7 @@ ion-toolbar {
   position: absolute;
   left: 0;
   right: 0;
-  top: 55%;
+  top: 50%;
   transform: translateY(-75%);
 }
 
@@ -34,7 +34,7 @@ ion-toolbar {
 }
 
 .starting-button {
-  width: 70%;
+  width: 50%;
   border-radius: 40px;
   margin: auto;
 }
