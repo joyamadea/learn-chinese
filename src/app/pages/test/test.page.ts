@@ -137,7 +137,7 @@ export class TestPage implements OnInit {
         this.random();
       } else {
         // FINISH QUIZ
-        this.userService.updateLvl(this.cat);
+        this.userService.updateLvl(this.cat, 'test');
         // ADD MODAL HERE
         this.modalFinished();
       }

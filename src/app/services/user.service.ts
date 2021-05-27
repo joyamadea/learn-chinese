@@ -60,7 +60,9 @@ export class UserService {
     other.once('value', (snapshot) => {
       if (!snapshot.hasChild(id)) {
         body = {
-          level: 'null',
+          learn: 'null',
+          practice: 'null',
+          test: 'null',
         };
         return userRef.set(id, body);
       } else {
@@ -69,7 +71,7 @@ export class UserService {
     });
   }
 
-  updateLvl(lvl) {
+  updateLvl(lvl, type) {
     let id;
     console.log(lvl);
     this.getUid().then((uid) => {
@@ -79,23 +81,59 @@ export class UserService {
         .object('/users/' + id)
         .valueChanges()
         .subscribe((data: any) => {
-          const currLvl = data.level;
-          const result = data.level.split(';');
+          let currLvl;
           let body;
-          if (result[0] == 'null') {
-            const newLvl = lvl.toString();
-            body = {
-              level: newLvl,
-            };
-          } else {
-            if (!result.includes(lvl.toString())) {
-              const newLvl = data.level + ';' + lvl.toString();
+          if (type == 'learn') {
+            currLvl = data.learn;
+            const result = data.learn.split(';');
+            if (result[0] == 'null') {
+              const newLvl = lvl.toString();
               body = {
-                level: newLvl,
+                learn: newLvl,
               };
+            } else {
+              if (!result.includes(lvl.toString())) {
+                const newLvl = data.learn + ';' + lvl.toString();
+                body = {
+                  learn: newLvl,
+                };
+              }
+            }
+          } else if (type == 'practice') {
+            currLvl = data.practice;
+            const result = data.practice.split(';');
+            if (result[0] == 'null') {
+              const newLvl = lvl.toString();
+              body = {
+                practice: newLvl,
+              };
+            } else {
+              if (!result.includes(lvl.toString())) {
+                const newLvl = data.practice + ';' + lvl.toString();
+                body = {
+                  practice: newLvl,
+                };
+              }
+            }
+          } else if (type == 'test') {
+            currLvl = data.test;
+            const result = data.test.split(';');
+            if (result[0] == 'null') {
+              const newLvl = lvl.toString();
+              body = {
+                test: newLvl,
+              };
+            } else {
+              if (!result.includes(lvl.toString())) {
+                const newLvl = data.test + ';' + lvl.toString();
+                body = {
+                  test: newLvl,
+                };
+              }
             }
           }
-          return userRef.set(id, body);
+
+          return userRef.update(id, body);
           // if (currLvl == lvl - 1) {
           //   let body = {
           //     level: lvl,

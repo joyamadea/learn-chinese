@@ -135,7 +135,7 @@ export class PracticePage implements OnInit {
         this.random();
       } else {
         // FINISH QUIZ
-        this.userService.updateLvl(this.cat + 1);
+        this.userService.updateLvl(this.cat, 'practice');
         // ADD MODAL HERE
         this.modalFinished();
       }

@@ -137,7 +137,7 @@ export class LearnPage implements OnInit {
         this.random();
       } else {
         // FINISH QUIZ
-        this.userService.updateLvl(this.cat + 1);
+        this.userService.updateLvl(this.cat, 'learn');
         // ADD MODAL HERE
         this.modalFinished();
       }

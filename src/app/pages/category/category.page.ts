@@ -82,8 +82,14 @@ export class CategoryPage implements OnInit {
         .valueChanges()
         .subscribe(
           (data: any) => {
-            this.currLvl = data.level;
-            let result = data.level.split(';');
+            let result;
+            if (this.type == 'learn') {
+              result = data.learn.split(';');
+            } else if (this.type == 'practice') {
+              result = data.practice.split(';');
+            } else if (this.type == 'test') {
+              result = data.test.split(';');
+            }
             this.categories.forEach((element) => {
               if (result.includes(element.key.toString())) {
                 element.available = true;
