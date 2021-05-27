@@ -111,13 +111,14 @@ export class CategoryPage implements OnInit {
   }
 
   gotoLevels(cat) {
-    if (this.type == 'test') {
-      this.router.navigate(['/test', cat]);
-    } else if (this.type == 'practice') {
-      this.router.navigate(['/practice', cat]);
-    } else if (this.type == 'learn') {
-      this.router.navigate(['/learn', cat]);
-    }
+    this.router.navigate(['/main', this.type, cat]);
+    // if (this.type == 'test') {
+    //   this.router.navigate(['/test', this.type, cat]);
+    // } else if (this.type == 'practice') {
+    //   this.router.navigate(['/practice', cat]);
+    // } else if (this.type == 'learn') {
+    //   this.router.navigate(['/learn', cat]);
+    // }
   }
 
   async openModal() {

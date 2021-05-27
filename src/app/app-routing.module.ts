@@ -57,6 +57,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/learn/learn.module').then((m) => m.LearnPageModule),
   },
+  {
+    path: 'main/:type/:id',
+    loadChildren: () =>
+      import('./pages/main/main.module').then((m) => m.MainPageModule),
+  },
 ];
 
 @NgModule({
