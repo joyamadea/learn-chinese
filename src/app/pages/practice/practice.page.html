@@ -23,6 +23,7 @@
         <img src="assets/square.png" style="width: 50%" />
         <div class="centered padding-10-percent">
           <span class="hanzi">{{ quiz[i].answer }}</span> <br />
+          <img [src]="quiz[i].url" width="50%" /> <br />
           <!-- <ion-icon [src]="url" color="warning"></ion-icon> <br> -->
           {{quiz[i].trans }}
         </div>
@@ -45,7 +46,7 @@
   </ion-row>
 
   <!-- TESTING WRONG/RIGHT ANSWER -->
-  <ion-row>
+  <!-- <ion-row>
     <ion-col>
       <ion-button
         (click)="wrongAnswer(i)"
@@ -59,7 +60,7 @@
         >next</ion-button
       >
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 </ion-content>
 
 <ion-footer>

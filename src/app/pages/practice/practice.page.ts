@@ -65,6 +65,12 @@ export class PracticePage implements OnInit {
         this.scoreArray = Array(this.quiz.length - 2);
         // this.scoreArray = Array(15);
         console.log(this.scoreArray);
+        this.quiz.forEach((element) => {
+          let img = this.storage.ref(element.pic);
+          img.getDownloadURL().subscribe((Url) => {
+            element.url = Url;
+          });
+        });
         // PUSHING TO ARRAY FOR RANDOMIZING INDEX
         for (let index = 0; index < this.quiz.length - 2; index++) {
           // indexArray contains indexes of the questions

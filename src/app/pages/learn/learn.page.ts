@@ -25,6 +25,8 @@ export class LearnPage implements OnInit {
   counter = 0;
   temp = [];
   answer: any;
+  score = 0;
+  scoreArray = Array();
 
   // testing
   url: any;
@@ -60,6 +62,7 @@ export class LearnPage implements OnInit {
       )
       .subscribe((data) => {
         this.quiz = data;
+        this.scoreArray = Array(this.quiz.length - 2);
 
         this.quiz.forEach((element) => {
           let img = this.storage.ref(element.pic);
@@ -184,6 +187,7 @@ export class LearnPage implements OnInit {
         // ZONING
         this.zone.run(() => {
           if (rightAnswer) {
+            this.score++;
             this.rightToast();
             this.next();
             listened = false;
