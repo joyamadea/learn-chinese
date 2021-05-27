@@ -2,6 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 import { ModalController, ToastController } from '@ionic/angular';
 import { count, map } from 'rxjs/operators';
 import { ConfirmExitPage } from 'src/app/modals/confirm-exit/confirm-exit.page';
@@ -36,7 +37,8 @@ export class MainPage implements OnInit {
     private zone: NgZone,
     private modalController: ModalController,
     private toastController: ToastController,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private tts: TextToSpeech
   ) {
     this.cat = this.activatedRoute.snapshot.params['id'];
     this.type = this.activatedRoute.snapshot.params['type'];
@@ -136,27 +138,16 @@ export class MainPage implements OnInit {
     }
   }
 
-  next() {
-    if (this.type == 'learn') {
+  next(result = 'right') {
+    if (result == 'right') {
       this.score++;
     }
     if (this.counter < this.indexArray.length - 1) {
-      this.counter++;
-      this.i = this.indexArray[this.counter];
+      if (!(result == 'wrong' && this.type == 'practice')) {
+        this.counter++;
+        this.i = this.indexArray[this.counter];
+      }
     } else {
-      // if (this.temp.length != 0) {
-      //   // REROLLING DECK
-      //   this.counter = 0;
-      //   this.indexArray = this.temp;
-      //   this.temp = [];
-      //   this.random();
-      // } else {
-      //   // FINISH QUIZ
-      //   this.userService.updateLvl(this.cat, 'test');
-      //   // ADD MODAL HERE
-      //   this.modalFinished();
-      // }
-
       // NO REPEATING
       // FINISH QUIZ
       this.userService.updateLvl(this.cat, this.type);
@@ -182,6 +173,7 @@ export class MainPage implements OnInit {
     const toast = await this.toastController.create({
       message: 'Correct',
       duration: 2000,
+      color: 'success',
     });
     toast.present();
   }
@@ -190,8 +182,26 @@ export class MainPage implements OnInit {
     const toast = await this.toastController.create({
       message: 'Wrong',
       duration: 2000,
+      color: 'danger',
     });
     toast.present();
+  }
+
+  texttospeech(word) {
+    this.tts
+      .speak({
+        text: word,
+        locale: 'zh-CN',
+        rate: 0.8,
+      })
+      .then(
+        () => {
+          console.log('success');
+        },
+        (err) => {
+          console.log('err tts', err);
+        }
+      );
   }
 
   startSpeech() {
@@ -226,7 +236,7 @@ export class MainPage implements OnInit {
             listened = false;
           } else if (!rightAnswer) {
             this.wrongToast();
-            this.wrongAnswer(this.i);
+            this.next('wrong');
             listened = false;
           }
         });
