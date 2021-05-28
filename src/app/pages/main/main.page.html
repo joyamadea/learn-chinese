@@ -23,9 +23,19 @@
           >
             <img src="assets/square.png" style="width: 75%" />
             <div class="centered padding-10-percent">
-              <span class="hanzi">{{ quiz[i].answer }}</span> <br />
-              <img [src]="quiz[i].url" width="50%" /> <br />
+              <span class="hanzi">{{ quiz[i].answer }}</span>
+              <br />
+              <img
+                [src]="quiz[i].url"
+                width="80%"
+                style="margin-bottom: 10px; margin-top: 10px"
+              />
+              <br />
               <!-- <ion-icon [src]="url" color="warning"></ion-icon> <br> -->
+              <span *ngIf="type == 'practice'" style="margin-bottom: 10px"
+                >{{ quiz[i].pinyin }}</span
+              >
+              <br *ngIf="type == 'practice'" />
               {{quiz[i].trans }}
             </div>
             <ion-ripple-effect></ion-ripple-effect>

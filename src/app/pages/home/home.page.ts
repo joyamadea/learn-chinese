@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PinyinService } from '../../services/pinyin.service';
 import { UserService } from 'src/app/services/user.service';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-home',
@@ -14,12 +15,17 @@ export class HomePage {
     private pinyinService: PinyinService,
     private router: Router,
     private userService: UserService,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private storage: Storage
   ) {
     this.statusBar.backgroundColorByHexString('#e5f9f8');
   }
 
   ngOnInit() {
+    // this.storage.get('uid').then((val) => {
+    //   // this.userService.addScore(val, 30, 1);
+    //   this.userService.addTotalScore(val, 30);
+    // });
     // this.userService.logout();
     // this.fetchUser();
   }

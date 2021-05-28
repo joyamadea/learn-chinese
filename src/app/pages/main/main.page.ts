@@ -5,6 +5,7 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 import { ModalController, ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 import { count, map } from 'rxjs/operators';
 import { ConfirmExitPage } from 'src/app/modals/confirm-exit/confirm-exit.page';
 import { LevelPassPage } from 'src/app/modals/level-pass/level-pass.page';
@@ -29,6 +30,7 @@ export class MainPage implements OnInit {
   scoreArray = Array();
   altAnswer: any;
   type: any;
+  uid: any;
 
   constructor(
     private speechRecognition: SpeechRecognition,
@@ -40,7 +42,8 @@ export class MainPage implements OnInit {
     private toastController: ToastController,
     private storage: AngularFireStorage,
     private tts: TextToSpeech,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private nativeStorage: Storage
   ) {
     this.cat = this.activatedRoute.snapshot.params['id'];
     this.type = this.activatedRoute.snapshot.params['type'];
@@ -83,6 +86,15 @@ export class MainPage implements OnInit {
         console.log(data);
         this.random();
       });
+    this.getId();
+  }
+
+  getId() {
+    this.nativeStorage.get('uid').then((val) => {
+      this.uid = val;
+      // this.userService.addScore(val, 30, 1);
+      // this.userService.addTotalScore(val, 30);
+    });
   }
 
   checkSpeechPermission() {
@@ -107,7 +119,7 @@ export class MainPage implements OnInit {
       cssClass: 'alert-modal-css',
       backdropDismiss: false,
       componentProps: {
-        type: 'test',
+        type: this.type,
       },
     });
     await modal.present();
@@ -151,12 +163,21 @@ export class MainPage implements OnInit {
         this.i = this.indexArray[this.counter];
       }
     } else {
-      // NO REPEATING
+      if (this.type == 'test') {
+        // this.updatingScores();
+      }
       // FINISH QUIZ
       this.userService.updateLvl(this.cat, this.type);
       // ADD MODAL HERE
       this.modalFinished();
     }
+  }
+
+  updatingScores() {
+    let newScore = this.score * 10;
+    console.log(this.score);
+    this.userService.addScore(this.uid, newScore, this.cat);
+    this.userService.addTotalScore(this.uid, newScore);
   }
 
   async modalFinished() {

@@ -1,8 +1,11 @@
+import { DeclarationListEmitMode } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Storage } from '@ionic/storage';
+import { count, map } from 'rxjs/operators';
 import { Category } from '../models/category';
+import { Score } from '../models/score';
 import { User } from '../models/user';
 
 @Injectable({
@@ -12,6 +15,7 @@ export class UserService {
   private categoryPath = '/category';
   categoryRef: AngularFireList<Category> = null;
   userRef: AngularFireList<User> = null;
+  scoreRef: AngularFireList<Score> = null;
 
   constructor(
     private fireAuth: AngularFireAuth,
@@ -88,8 +92,6 @@ export class UserService {
     });
   }
 
-  checkUserExists() {}
-
   getUid() {
     return new Promise<any>((resolve, reject) => {
       this.fireAuth.onAuthStateChanged(
@@ -105,9 +107,94 @@ export class UserService {
     });
   }
 
-  getUserAchievements(uid): AngularFireList<User> {
-    this.userRef = this.db.list('/users/' + uid + '/achievements');
-    return this.userRef;
+  getScore(cat): AngularFireList<Score> {
+    this.scoreRef = this.db.list('/score/' + cat);
+    return this.scoreRef;
+  }
+
+  addScore(id, scoreAchieved, cat) {
+    let body;
+
+    this.getScore(cat)
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => ({ key: c.payload.key, ...c.payload.val() }))
+        )
+      )
+      .subscribe((data: any) => {
+        let notFound = true;
+        data.forEach((element) => {
+          if (element.key == id && scoreAchieved > element.score) {
+            console.log('masuk');
+            const ref = this.db.list('/score/' + cat);
+            body = {
+              score: scoreAchieved,
+            };
+            notFound = false;
+            return ref.update(id, body);
+          }
+        });
+        if (notFound) {
+          const ref = this.db.list('/score/' + cat);
+          body = {
+            score: scoreAchieved,
+          };
+          return ref.set(id, body);
+        }
+        console.log(data);
+      });
+    // this.db
+    //   .object('/score/' + cat)
+    //   .valueChanges()
+    //   .subscribe((data: any) => {
+    //     // if(data.detail.category == cat && data.detail.score < score) {
+    //     //   body = {
+
+    //     //   }
+    //     // }
+    //     if(data.)
+    //     console.log(data);
+    //   });
+  }
+
+  addTotalScore(id, scoreAchieved) {
+    let body;
+    let counter = 1;
+    let scoring;
+    this.db
+      .object('/totalscores/' + id)
+      .valueChanges()
+      .subscribe((data: any) => {
+        // const highscoreRef = this.db.list('/totalscores');
+        scoring = data.highscore;
+        // const newScore = scoreAchieved + data.highscore;
+        // body = {
+        //   highscore: newScore,
+        // };
+        // if (counter == 1) {
+        //   counter++;
+        //   return highscoreRef.set(id, body);
+        // }
+        // return highscoreRef.set(id, body);
+        console.log(data);
+      });
+    const other = this.db.database.ref('/totalscores');
+    other.once('value', (snapshot) => {
+      const highscoreRef = this.db.list('/totalscores');
+      const newScore = scoreAchieved + scoring;
+      if (!snapshot.hasChild(id)) {
+        body = {
+          highscore: newScore,
+        };
+        return highscoreRef.set(id, body);
+      } else {
+        body = {
+          highscore: newScore,
+        };
+        return highscoreRef.update(id, body);
+      }
+    });
   }
 
   createUser(id, userName) {
@@ -212,12 +299,6 @@ export class UserService {
           }
 
           return userRef.update(id, body);
-          // if (currLvl == lvl - 1) {
-          //   let body = {
-          //     level: lvl,
-          //   };
-          //   return userRef.set(id, body);
-          // }
         });
     });
   }
