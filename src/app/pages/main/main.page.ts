@@ -2,6 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 import { ModalController, ToastController } from '@ionic/angular';
 import { count, map } from 'rxjs/operators';
@@ -38,10 +39,12 @@ export class MainPage implements OnInit {
     private modalController: ModalController,
     private toastController: ToastController,
     private storage: AngularFireStorage,
-    private tts: TextToSpeech
+    private tts: TextToSpeech,
+    private statusBar: StatusBar
   ) {
     this.cat = this.activatedRoute.snapshot.params['id'];
     this.type = this.activatedRoute.snapshot.params['type'];
+    this.statusBar.backgroundColorByHexString('#2e495e');
     console.log(this.type);
     this.cat = Number(this.cat);
   }

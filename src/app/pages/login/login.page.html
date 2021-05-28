@@ -1,0 +1,36 @@
+<ion-header translucent="true">
+  <ion-toolbar> </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  <div id="container">
+    <ion-row
+      class="text-title ion-text-center"
+      style="margin-top: 40%; color: black"
+    >
+      <ion-col> Enter your name </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="2"></ion-col>
+      <ion-col size="8">
+        <ion-input class="input-box" [(ngModel)]="user"></ion-input>
+      </ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+    <ion-row style="margin-top: 10px">
+      <ion-col>
+        <!-- <ion-item lines="none"> -->
+        <div class="ion-activatable ripple-parent starting-button">
+          <img
+            src="assets/buttons/submitBtn.png"
+            style="width: 100%"
+            (click)="login()"
+          />
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+        <!-- </ion-item> -->
+        <!-- <ion-button class="boxes text-category" expand="block" color="verdigris">Practice</ion-button> -->
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

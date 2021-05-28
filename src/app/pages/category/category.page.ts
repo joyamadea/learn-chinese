@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { ConfirmExitPage } from 'src/app/modals/confirm-exit/confirm-exit.page';
@@ -30,8 +31,10 @@ export class CategoryPage implements OnInit {
     private db: AngularFireDatabase,
     private modalController: ModalController,
     private storage: AngularFireStorage,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private statusBar: StatusBar
   ) {
+    this.statusBar.backgroundColorByHexString('#2e495e');
     this.type = this.activatedRoute.snapshot.params['type'];
     console.log('type', this.type);
   }
