@@ -45,6 +45,7 @@ export class LoginPage implements OnInit {
 
     this.userService.getUid().then((data: any) => {
       this.userService.createUser(data, this.user);
+      this.router.navigate(['/home']);
       this.storage.set('uid', data);
     });
   }

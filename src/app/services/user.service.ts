@@ -5,6 +5,7 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Storage } from '@ionic/storage';
 import { count, map } from 'rxjs/operators';
 import { Category } from '../models/category';
+import { Leaderboard } from '../models/leaderboard';
 import { Score } from '../models/score';
 import { User } from '../models/user';
 
@@ -16,6 +17,7 @@ export class UserService {
   categoryRef: AngularFireList<Category> = null;
   userRef: AngularFireList<User> = null;
   scoreRef: AngularFireList<Score> = null;
+  leaderboardRef: AngularFireList<Leaderboard> = null;
 
   constructor(
     private fireAuth: AngularFireAuth,
@@ -124,9 +126,10 @@ export class UserService {
       )
       .subscribe((data: any) => {
         let notFound = true;
+        console.log('data', data);
         data.forEach((element) => {
           if (element.key == id && scoreAchieved > element.score) {
-            console.log('masuk');
+            console.log('masuk key == id');
             const ref = this.db.list('/score/' + cat);
             body = {
               score: scoreAchieved,
@@ -136,6 +139,7 @@ export class UserService {
           }
         });
         if (notFound) {
+          console.log('masuk not found');
           const ref = this.db.list('/score/' + cat);
           body = {
             score: scoreAchieved,
@@ -162,37 +166,42 @@ export class UserService {
     let body;
     let counter = 1;
     let scoring;
-    this.db
-      .object('/totalscores/' + id)
-      .valueChanges()
-      .subscribe((data: any) => {
-        // const highscoreRef = this.db.list('/totalscores');
-        scoring = data.highscore;
-        // const newScore = scoreAchieved + data.highscore;
-        // body = {
-        //   highscore: newScore,
-        // };
-        // if (counter == 1) {
-        //   counter++;
-        //   return highscoreRef.set(id, body);
-        // }
-        // return highscoreRef.set(id, body);
-        console.log(data);
-      });
+
     const other = this.db.database.ref('/totalscores');
     other.once('value', (snapshot) => {
+      console.log('masuk add total score');
       const highscoreRef = this.db.list('/totalscores');
-      const newScore = scoreAchieved + scoring;
+      let newScore;
+      // const newScore = scoreAchieved + scoring;
       if (!snapshot.hasChild(id)) {
+        newScore = scoreAchieved;
+        console.log('masuk blm ada id');
         body = {
           highscore: newScore,
         };
-        return highscoreRef.set(id, body);
+        console.log('body', body);
+        if (counter == 1) {
+          counter++;
+          return highscoreRef.set(id, body);
+        }
       } else {
-        body = {
-          highscore: newScore,
-        };
-        return highscoreRef.update(id, body);
+        this.db
+          .object('/totalscores/' + id)
+          .valueChanges()
+          .subscribe((data: any) => {
+            scoring = data.highscore;
+            newScore = scoreAchieved + scoring;
+            body = {
+              highscore: newScore,
+            };
+            if (counter == 1) {
+              counter++;
+              return highscoreRef.set(id, body);
+            }
+            console.log('totalscores', newScore);
+          });
+
+        // return highscoreRef.update(id, body);
       }
     });
   }
@@ -200,7 +209,9 @@ export class UserService {
   createUser(id, userName) {
     console.log(id);
     let body;
+    let body2;
     const userRef = this.db.list('/users/');
+    const progressRef = this.db.list('/progress/');
     const other = this.db.database.ref('/users');
     other.once('value', (snapshot) => {
       if (!snapshot.hasChild(id)) {
@@ -210,7 +221,14 @@ export class UserService {
           test: 'null',
           name: userName,
         };
-        return userRef.set(id, body);
+
+        const todayDate = new Date(Date.now()).toLocaleDateString();
+        console.log(todayDate);
+        body2 = {
+          lastplayed: todayDate,
+          lastscore: 0,
+        };
+        return userRef.set(id, body), progressRef.set(id, body2);
       } else {
         console.log('already exists');
       }
@@ -301,5 +319,39 @@ export class UserService {
           return userRef.update(id, body);
         });
     });
+  }
+
+  getLeaderboard(): AngularFireList<Leaderboard> {
+    this.leaderboardRef = this.db.list('/totalscores/');
+    return this.leaderboardRef;
+  }
+
+  setProgress(id, score) {
+    let counter = 1;
+    let body;
+    const progressRef = this.db.list('/progress/');
+    this.db
+      .object('progress/' + id)
+      .valueChanges()
+      .subscribe((data: any) => {
+        if (counter == 1) {
+          counter++;
+          const todaydate = new Date(Date.now()).toLocaleDateString();
+          if (todaydate == data.lastplayed) {
+            let newScore = data.lastscore + score;
+            body = {
+              lastscore: newScore,
+            };
+            return progressRef.update(id, body);
+          } else {
+            let newScore = score;
+            body = {
+              lastplayed: todaydate,
+              lastscore: newScore,
+            };
+            return progressRef.update(id, body);
+          }
+        }
+      });
   }
 }

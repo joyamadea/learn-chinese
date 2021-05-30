@@ -27,11 +27,11 @@
         <ion-ripple-effect></ion-ripple-effect>
       </div>
     </ion-col>
-    <!-- <ion-col size="6">
-      <div class="ion-activatable ripple-parent starting-button" (click)="closeModal()">
-        <img src="assets/buttons/circular/retry.png">
-        <ion-ripple-effect></ion-ripple-effect>
-      </div>
-    </ion-col> -->
+  </ion-row>
+
+  <ion-row *ngIf="type == 'test'">
+    <ion-col>
+      Score: {{ score }}
+    </ion-col>
   </ion-row>
 </ion-content>

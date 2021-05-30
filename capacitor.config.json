@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "learn-chinese",
+  "appName": "Learn Chinese",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
