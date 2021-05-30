@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.starapp.learnchinese;
 
 import android.os.Bundle;
 
