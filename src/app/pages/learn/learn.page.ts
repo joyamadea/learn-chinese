@@ -1,49 +1,93 @@
 import { Component, NgZone, OnInit } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { ModalController, ToastController } from '@ionic/angular';
-import { count, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ConfirmExitPage } from 'src/app/modals/confirm-exit/confirm-exit.page';
 import { LevelPassPage } from 'src/app/modals/level-pass/level-pass.page';
 import { PinyinService } from 'src/app/services/pinyin.service';
 import { UserService } from 'src/app/services/user.service';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 
 @Component({
-  selector: 'app-learn',
+  selector: 'app-practice',
   templateUrl: './learn.page.html',
   styleUrls: ['./learn.page.scss'],
 })
 export class LearnPage implements OnInit {
   cat: any;
-  lvl: any;
   quiz: any;
   i: number;
-  array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  newArray = [];
+  indexArray = [];
   initialCount = 2;
   counter = 0;
   temp = [];
-  disableButton = false;
   answer: any;
+  score = 0;
+  scoreArray = Array();
+
+  // testing
   url: any;
 
   constructor(
     private speechRecognition: SpeechRecognition,
     private pinyinService: PinyinService,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private zone: NgZone,
     private modalController: ModalController,
-    private storage: AngularFireStorage,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private tts: TextToSpeech,
+    private storage: AngularFireStorage
   ) {
-    this.cat = this.activatedRoute.snapshot.params['category'];
+    this.cat = this.activatedRoute.snapshot.params['id'];
     this.cat = Number(this.cat);
   }
 
   ngOnInit() {
+    this.checkSpeechPermission();
+  }
+
+  ionViewWillEnter() {
+    // FETCH QUIZ
+    this.pinyinService
+      .getQuiz(this.cat)
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => ({ key: c.payload.key, ...c.payload.val() }))
+        )
+      )
+      .subscribe((data) => {
+        this.quiz = data;
+        this.scoreArray = Array(this.quiz.length - 2);
+
+        this.quiz.forEach((element) => {
+          let img = this.storage.ref(element.pic);
+          img.getDownloadURL().subscribe((Url) => {
+            element.url = Url;
+          });
+        });
+        // PUSHING TO ARRAY FOR RANDOMIZING INDEX
+        for (let index = 0; index < this.quiz.length - 2; index++) {
+          // indexArray contains indexes of the questions
+          this.indexArray.push(this.initialCount);
+          this.initialCount++;
+        }
+        console.log(data);
+        this.random();
+      });
+
+    // testing image
+    let img = this.storage.ref('/questions/birthday-cake.svg');
+    img.getDownloadURL().subscribe((Url) => {
+      this.url = Url;
+    });
+  }
+
+  checkSpeechPermission() {
     // SPEECH PERMISSIONS
     this.speechRecognition.hasPermission().then((perms: boolean) => {
       if (perms == false) {
@@ -57,27 +101,6 @@ export class LearnPage implements OnInit {
         );
       }
     });
-
-    // FETCH QUIZ
-    this.pinyinService
-      .getQuiz(this.cat)
-      .snapshotChanges()
-      .pipe(
-        map((changes) =>
-          changes.map((c) => ({ key: c.payload.key, ...c.payload.val() }))
-        )
-      )
-      .subscribe((data) => {
-        this.quiz = data;
-        // PUSHING TO ARRAY FOR RANDOMIZING INDEX
-        for (let index = 0; index < this.quiz.length - 2; index++) {
-          // newArray contains indexes of questions
-          this.newArray.push(this.initialCount);
-          this.initialCount++;
-        }
-        console.log(data);
-        this.random();
-      });
   }
 
   async closeLearning() {
@@ -85,76 +108,60 @@ export class LearnPage implements OnInit {
       component: ConfirmExitPage,
       cssClass: 'alert-modal-css',
       backdropDismiss: false,
+      componentProps: {
+        type: 'learn',
+      },
     });
     await modal.present();
   }
 
   random() {
     // RANDOMIZING ARRAY CONTENTS
-    let i = this.newArray.length;
+    let i = this.indexArray.length;
     while (i--) {
       let j = Math.floor(Math.random() * (i + 1));
-      let tempIndex = this.newArray[i];
-      this.newArray[i] = this.newArray[j];
-      this.newArray[j] = tempIndex;
+      let tempIndex = this.indexArray[i];
+      this.indexArray[i] = this.indexArray[j];
+      this.indexArray[j] = tempIndex;
     }
-    this.i = this.newArray[this.counter];
-  }
-
-  wrongAnswer(i) {
-    // PUSHING WRONG ANSWER TO TEMPORARY ARRAY
-    this.temp.push(i);
-    console.log('temp array', this.temp);
-    this.next();
+    this.i = this.indexArray[this.counter];
   }
 
   next() {
-    if (this.counter < this.newArray.length - 1) {
+    if (this.counter < this.indexArray.length - 1) {
       this.counter++;
-      this.i = this.newArray[this.counter];
+      this.i = this.indexArray[this.counter];
     } else {
       if (this.temp.length != 0) {
         // REROLLING DECK
         this.counter = 0;
-        this.newArray = this.temp;
+        this.indexArray = this.temp;
         this.temp = [];
         this.random();
       } else {
         // FINISH QUIZ
-        this.disableButton = true;
-        this.userService.updateLvl(this.cat + 1);
+        this.userService.updateLvl(this.cat, 'learn');
         // ADD MODAL HERE
         this.modalFinished();
       }
     }
   }
 
-  async modalFinished() {
-    const modal = await this.modalController.create({
-      component: LevelPassPage,
-      cssClass: 'alert-modal-css',
-      backdropDismiss: false,
-      componentProps: {
-        level: this.cat,
-      },
-    });
-    await modal.present();
-  }
-
-  async rightToast() {
-    const toast = await this.toastController.create({
-      message: 'Correct',
-      duration: 2000,
-    });
-    toast.present();
-  }
-
-  async wrongToast() {
-    const toast = await this.toastController.create({
-      message: 'Wrong',
-      duration: 2000,
-    });
-    toast.present();
+  texttospeech(word) {
+    this.tts
+      .speak({
+        text: word,
+        locale: 'zh-CN',
+        rate: 0.8,
+      })
+      .then(
+        () => {
+          console.log('success');
+        },
+        (err) => {
+          console.log('err tts', err);
+        }
+      );
   }
 
   startSpeech() {
@@ -180,12 +187,12 @@ export class LearnPage implements OnInit {
         // ZONING
         this.zone.run(() => {
           if (rightAnswer) {
+            this.score++;
             this.rightToast();
             this.next();
             listened = false;
           } else if (!rightAnswer) {
             this.wrongToast();
-            this.wrongAnswer(this.i);
             listened = false;
           }
         });
@@ -197,5 +204,32 @@ export class LearnPage implements OnInit {
     );
   }
 
-  determineAnswer() {}
+  async modalFinished() {
+    const modal = await this.modalController.create({
+      component: LevelPassPage,
+      cssClass: 'alert-modal-css',
+      backdropDismiss: false,
+      componentProps: {
+        level: this.cat,
+        type: 'practice',
+      },
+    });
+    await modal.present();
+  }
+
+  async rightToast() {
+    const toast = await this.toastController.create({
+      message: 'Correct',
+      duration: 2000,
+    });
+    toast.present();
+  }
+
+  async wrongToast() {
+    const toast = await this.toastController.create({
+      message: 'Wrong',
+      duration: 2000,
+    });
+    toast.present();
+  }
 }

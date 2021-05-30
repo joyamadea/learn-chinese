@@ -1,0 +1,136 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="closeLearning()" slot="start" fill="clear">
+        <img src="./assets/buttons/circular/close.png" />
+        <ion-icon name="close" slot="icon-only" color="white"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-title class="text-title" text-center>Level</ion-title> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="quiz" fullscreen="true">
+  <div id="container">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center ion-margin-horizontal">
+        <ion-col>
+          <!-- NON-TESTING MODE -->
+          <div
+            *ngIf="type != 'test'"
+            class="container ion-activatable ripple-parent"
+            (click)="texttospeech(quiz[i].answer)"
+          >
+            <img src="assets/square.png" style="width: 75%" />
+            <div class="centered padding-10-percent">
+              <span class="hanzi">{{ quiz[i].answer }}</span>
+              <br />
+              <img
+                [src]="quiz[i].url"
+                width="80%"
+                style="margin-bottom: 10px; margin-top: 10px"
+              />
+              <br />
+              <!-- <ion-icon [src]="url" color="warning"></ion-icon> <br> -->
+              <span *ngIf="type == 'practice'" style="margin-bottom: 10px"
+                >{{ quiz[i].pinyin }}</span
+              >
+              <br *ngIf="type == 'practice'" />
+              {{quiz[i].trans }}
+            </div>
+            <ion-ripple-effect></ion-ripple-effect>
+          </div>
+
+          <!-- TEST -->
+          <div class="container" *ngIf="type == 'test'">
+            <img src="assets/square.png" style="width: 75%" />
+            <div class="centered padding-10-percent">
+              <span class="hanzi">{{ quiz[i].answer }}</span> <br />
+              <img [src]="quiz[i].url" width="50%" /> <br />
+              <!-- <ion-icon [src]="url" color="warning"></ion-icon> <br> -->
+              {{quiz[i].trans }}
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col *ngIf="type != 'learn'">
+          <div class="ion-activatable ripple-parent starting-button">
+            <img
+              *ngIf="type == 'test'"
+              src="assets/buttons/answerBtn.png"
+              style="width: 100%"
+              (click)="startSpeech()"
+            />
+            <img
+              *ngIf="type == 'practice'"
+              src="assets/buttons/speakBtn.png"
+              style="width: 100%"
+              (click)="startSpeech()"
+            />
+            <ion-ripple-effect></ion-ripple-effect>
+          </div>
+        </ion-col>
+        <ion-col *ngIf="type == 'learn'">
+          <ion-row>
+            <ion-col>
+              <div class="ion-activatable ripple-parent next-button">
+                <img
+                  src="assets/buttons/prevBtn.png"
+                  style="width: 100%"
+                  (click)="prev()"
+                />
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+            </ion-col>
+            <ion-col>
+              <div class="ion-activatable ripple-parent next-button">
+                <img
+                  src="assets/buttons/nextBtn.png"
+                  style="width: 100%"
+                  (click)="next()"
+                />
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-row
+      class="ion-justify-content-center ion-margin-horizontal"
+      style="height: 50%"
+    >
+      <ion-col size="1.5" *ngFor="let x of scoreArray; let i = index">
+        <img
+          *ngIf="i < score && score != 0"
+          style="width: 100%"
+          src="./assets/s1.png"
+        />
+
+        <img
+          *ngIf="i >= score || score == 0"
+          style="width: 100%"
+          src="./assets/s2.png"
+        />
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <!-- <ion-row>
+    <ion-col>
+      <ion-button
+        (click)="wrongAnswer(i)"
+        expand="full"
+        class="ion-text-capitalize"
+        >wrong</ion-button
+      >
+    </ion-col>
+    <ion-col>
+      <ion-button (click)="next()" expand="full" class="ion-text-capitalize"
+        >next</ion-button
+      >
+    </ion-col>
+  </ion-row> -->
+</ion-content>

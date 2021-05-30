@@ -2,27 +2,28 @@
   <div class="wrapper"></div>
   <ion-row>
     <ion-col size="12" class="sign-message ion-padding-top">
-      <img class="padding-top-20" src="assets/s1.png" />
+      <img class="padding-top-20" src="assets/girl-thumbs-up.png" />
     </ion-col>
 
     <ion-col size="12" class="message padding-horizontal-22">
       Congratulations! You have learned everything
     </ion-col>
 
-    <ion-col size="12">
+    <ion-col size="6">
       <div
-        class="ion-activatable ripple-parent starting-button float-left"
-        (click)="gotoHome()"
-      >
-        <img class="width-40" src="assets/buttons/circular/home.png" />
-        <ion-ripple-effect></ion-ripple-effect>
-      </div>
-
-      <div
-        class="ion-activatable ripple-parent starting-button"
+        class="ion-activatable ripple-parent starting-button ion-text-right"
         (click)="retry()"
       >
-        <img class="width-40" src="assets/buttons/circular/retry.png" />
+        <img src="assets/buttons/circular/retry.png" class="ion-text-right" />
+        <ion-ripple-effect></ion-ripple-effect>
+      </div>
+    </ion-col>
+    <ion-col size="6">
+      <div
+        class="ion-activatable ripple-parent starting-button ion-text-left"
+        (click)="gotoHome()"
+      >
+        <img src="assets/buttons/circular/home.png" class="ion-text-left" />
         <ion-ripple-effect></ion-ripple-effect>
       </div>
     </ion-col>

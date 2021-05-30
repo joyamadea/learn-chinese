@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { ConfirmExitPage } from 'src/app/modals/confirm-exit/confirm-exit.page';
@@ -19,6 +20,9 @@ export class CategoryPage implements OnInit {
   uid: any;
   currLvl = 1;
   url: any;
+  type: any;
+  scoreArray = Array(3);
+  loaded = false;
 
   constructor(
     private pinyinService: PinyinService,
@@ -26,8 +30,14 @@ export class CategoryPage implements OnInit {
     private userService: UserService,
     private db: AngularFireDatabase,
     private modalController: ModalController,
-    private storage: AngularFireStorage
-  ) {}
+    private storage: AngularFireStorage,
+    private activatedRoute: ActivatedRoute,
+    private statusBar: StatusBar
+  ) {
+    this.statusBar.backgroundColorByHexString('#2e495e');
+    this.type = this.activatedRoute.snapshot.params['type'];
+    console.log('type', this.type);
+  }
 
   ngOnInit() {}
 
@@ -48,7 +58,12 @@ export class CategoryPage implements OnInit {
             img.getDownloadURL().subscribe((Url) => {
               element.url = Url;
             });
+            if (element.key == this.categories.length) {
+              this.loaded = true;
+              console.log(this.loaded);
+            }
           });
+
           this.checkUid();
           console.log(this.categories);
         },
@@ -58,6 +73,9 @@ export class CategoryPage implements OnInit {
       );
   }
 
+  ionViewWillLeave() {
+    this.loaded = false;
+  }
   checkUid() {
     console.log('masuk check uid');
     this.userService.getUid().then((data) => {
@@ -67,9 +85,16 @@ export class CategoryPage implements OnInit {
         .valueChanges()
         .subscribe(
           (data: any) => {
-            this.currLvl = data.level;
+            let result;
+            if (this.type == 'learn') {
+              result = data.learn.split(';');
+            } else if (this.type == 'practice') {
+              result = data.practice.split(';');
+            } else if (this.type == 'test') {
+              result = data.test.split(';');
+            }
             this.categories.forEach((element) => {
-              if (element.key <= this.currLvl) {
+              if (result.includes(element.key.toString())) {
                 element.available = true;
               } else {
                 element.available = false;
@@ -89,7 +114,14 @@ export class CategoryPage implements OnInit {
   }
 
   gotoLevels(cat) {
-    this.router.navigate(['/learn', cat]);
+    this.router.navigate(['/main', this.type, cat]);
+    // if (this.type == 'test') {
+    //   this.router.navigate(['/test', this.type, cat]);
+    // } else if (this.type == 'practice') {
+    //   this.router.navigate(['/practice', cat]);
+    // } else if (this.type == 'learn') {
+    //   this.router.navigate(['/learn', cat]);
+    // }
   }
 
   async openModal() {

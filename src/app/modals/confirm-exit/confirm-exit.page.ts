@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
@@ -8,15 +8,26 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./confirm-exit.page.scss'],
 })
 export class ConfirmExitPage implements OnInit {
+  @Input() type;
+
   constructor(
     private modalController: ModalController,
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.type);
+  }
 
   confirmExit() {
-    this.router.navigate(['/category']);
+    if (this.type == 'practice') {
+      this.router.navigate(['/category/practice']);
+    } else if (this.type == 'test') {
+      this.router.navigate(['/category/test']);
+    } else if (this.type == 'learn') {
+      this.router.navigate(['/category/learn']);
+    }
+
     this.modalController.dismiss();
   }
 

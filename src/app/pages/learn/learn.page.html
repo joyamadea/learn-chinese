@@ -11,57 +11,41 @@
 </ion-header>
 
 <ion-content *ngIf="quiz" fullscreen="true">
+  <!-- TESTING IMAGE -->
+  <!-- <img [src]="url" /> -->
+
   <ion-row>
     <ion-col>
-      <div class="container">
+      <div
+        class="container ion-activatable ripple-parent"
+        (click)="texttospeech(quiz[i].answer)"
+      >
         <img src="assets/square.png" style="width: 50%" />
         <div class="centered padding-10-percent">
           <span class="hanzi">{{ quiz[i].answer }}</span> <br />
+          <img [src]="quiz[i].url" width="50%" /> <br />
           <!-- <ion-icon [src]="url" color="warning"></ion-icon> <br> -->
           {{quiz[i].trans }}
         </div>
-      </div>
-    </ion-col>
-  </ion-row>
-  <ion-row class="ion-align-items-center">
-    <ion-col size="6" class="ion-text-center ion-no-padding">
-      <div class="container">
-        <img src="assets/buttons/b_4.png" style="width: 80%" />
-        <div class="centered">{{ quiz[i].option1 }}</div>
-      </div>
-    </ion-col>
-    <ion-col size="6" class="ion-text-center ion-no-padding">
-      <div class="container">
-        <img src="assets/buttons/b_4.png" style="width: 80%" />
-        <div class="centered">{{ quiz[i].option2 }}</div>
-      </div>
-    </ion-col>
-    <ion-col size="6" class="ion-text-center ion-no-padding">
-      <div class="container">
-        <img src="assets/buttons/b_4.png" style="width: 80%" />
-        <div class="centered">{{ quiz[i].option3 }}</div>
-      </div>
-    </ion-col>
-    <ion-col size="6" class="ion-text-center ion-no-padding">
-      <div class="container">
-        <img src="assets/buttons/b_4.png" style="width: 80%" />
-        <div class="centered">{{ quiz[i].option4 }}</div>
+        <ion-ripple-effect></ion-ripple-effect>
       </div>
     </ion-col>
   </ion-row>
 
-  <ion-row>
+  <!-- <ion-row>
     <ion-col>
       <div class="ion-activatable ripple-parent starting-button">
         <img
-          src="assets/buttons/answerBtn.png"
+          src="assets/buttons/speakBtn.png"
           style="width: 100%"
           (click)="startSpeech()"
         />
         <ion-ripple-effect></ion-ripple-effect>
       </div>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
+
+  <!-- TESTING WRONG/RIGHT ANSWER -->
   <ion-row>
     <ion-col>
       <ion-button
@@ -78,3 +62,27 @@
     </ion-col>
   </ion-row>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row class="ion-justify-content-center ion-margin-horizontal">
+      <ion-col size="1" *ngFor="let x of scoreArray; let i = index">
+        <img
+          *ngIf="i < score && score != 0"
+          style="width: 100%"
+          src="./assets/s1.png"
+        />
+
+        <img
+          *ngIf="i >= score || score == 0"
+          style="width: 100%"
+          src="./assets/s2.png"
+        />
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+
+  <!-- <div *ngFor="let x of quiz" style="float: left">
+    <img style="width: 40%" src="./assets/s1.png" />
+  </div> -->
+</ion-footer>

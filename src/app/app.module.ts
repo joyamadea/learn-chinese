@@ -18,6 +18,8 @@ import { environment } from 'src/environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +31,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
+    IonicStorageModule.forRoot(),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -36,6 +39,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
     SpeechRecognition,
     StatusBar,
     ScreenOrientation,
+    TextToSpeech,
   ],
   bootstrap: [AppComponent],
 })
