@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Router } from '@angular/router';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -17,8 +18,11 @@ export class ProfilePage implements OnInit {
   constructor(
     private storage: Storage,
     private db: AngularFireDatabase,
-    private router: Router
-  ) {}
+    private router: Router,
+    private statusBar: StatusBar
+  ) {
+    this.statusBar.backgroundColorByHexString('#e5f9f8');
+  }
 
   ngOnInit() {
     this.getInfo();
@@ -30,6 +34,7 @@ export class ProfilePage implements OnInit {
 
   getInfo() {
     this.storage.get('name').then((val) => {
+      console.log(val);
       this.name = val;
     });
 

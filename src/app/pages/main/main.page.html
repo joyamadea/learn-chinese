@@ -16,29 +16,34 @@
       <ion-row class="ion-justify-content-center ion-margin-horizontal">
         <ion-col>
           <!-- NON-TESTING MODE -->
-          <div
-            *ngIf="type != 'test'"
-            class="container ion-activatable ripple-parent"
-            (click)="texttospeech(quiz[i].answer)"
-          >
-            <img src="assets/square.png" style="width: 75%" />
+          <div *ngIf="type != 'test'" class="container">
+            <!-- <img src="assets/square.png" style="width: 75%" />
             <div class="centered padding-10-percent">
               <span class="hanzi">{{ quiz[i].answer }}</span>
               <br />
               <img
                 [src]="quiz[i].url"
-                width="80%"
+                width="50%"
                 style="margin-bottom: 10px; margin-top: 10px"
               />
               <br />
-              <!-- <ion-icon [src]="url" color="warning"></ion-icon> <br> -->
               <span *ngIf="type == 'practice'" style="margin-bottom: 10px"
                 >{{ quiz[i].pinyin }}</span
               >
               <br *ngIf="type == 'practice'" />
               {{quiz[i].trans }}
+            </div> -->
+
+            <div class="container" *ngIf="type == 'practice'">
+              <img src="assets/square.png" style="width: 75%" />
+              <div class="centered padding-10-percent">
+                <span class="hanzi">{{ quiz[i].answer }}</span> <br />
+                <img [src]="quiz[i].url" width="50%" /> <br />
+                <span style="margin-bottom: 10px">{{ quiz[i].pinyin }}</span>
+                <br />
+                {{quiz[i].trans }}
+              </div>
             </div>
-            <ion-ripple-effect></ion-ripple-effect>
           </div>
 
           <!-- TEST -->
@@ -50,6 +55,19 @@
               <!-- <ion-icon [src]="url" color="warning"></ion-icon> <br> -->
               {{quiz[i].trans }}
             </div>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="type == 'practice'" class="ion-justify-content-center">
+        <ion-col>
+          <div style="display: flex; align-items: center; padding-left: 32%">
+            <span style="color: white">Click to hear</span> &nbsp;&nbsp;
+            <img
+              src="../../../assets/buttons/circular/sound.png"
+              style="width: 10%"
+              (click)="texttospeech(quiz[i].answer)"
+            />
           </div>
         </ion-col>
       </ion-row>

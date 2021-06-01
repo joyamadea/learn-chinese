@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Router } from '@angular/router';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 import { map } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
@@ -17,8 +18,11 @@ export class LeaderboardPage implements OnInit {
     private userService: UserService,
     private db: AngularFireDatabase,
     private router: Router,
-    private storage: Storage
-  ) {}
+    private storage: Storage,
+    private statusBar: StatusBar
+  ) {
+    this.statusBar.backgroundColorByHexString('#e5f9f8');
+  }
 
   ngOnInit() {}
 

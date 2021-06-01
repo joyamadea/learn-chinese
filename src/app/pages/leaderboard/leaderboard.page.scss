@@ -1,6 +1,7 @@
 ion-content {
   --background: url("../../../assets/meadow-3.png") no-repeat center center /
     cover;
+  font-family: keepcalm;
 }
 ion-toolbar {
   --background: transparent;
@@ -19,4 +20,9 @@ ion-toolbar {
   padding-bottom: 13px;
   padding-left: 16px;
   padding-right: 16px;
+}
+
+.current-player {
+  color: #f09d23;
+  font-weight: bold;
 }

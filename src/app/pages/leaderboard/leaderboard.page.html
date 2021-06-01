@@ -6,12 +6,14 @@
         <ion-icon name="arrow-back" slot="icon-only" color="white"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="text-title" text-center>Leaderboard</ion-title>
+    <ion-title class="text-title-alt" style="font-weight: bold" text-center
+      >Leaderboard</ion-title
+    >
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" fullscreen="true">
-  <ion-row class="header-padding">
+  <ion-row class="header-padding" style="font-size: 14px">
     <ion-col size="2"> No. </ion-col>
 
     <ion-col size="8"> Name </ion-col>
@@ -30,7 +32,7 @@
           <ion-col
             size="8"
             [ngClass]="{
-            'text-title': l.highlight
+            'current-player': l.highlight
           }"
           >
             {{ l.name }}

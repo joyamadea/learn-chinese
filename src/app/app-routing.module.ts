@@ -66,19 +66,26 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
-  },  {
+  },
+  {
     path: 'leaderboard',
-    loadChildren: () => import('./pages/leaderboard/leaderboard.module').then( m => m.LeaderboardPageModule)
+    loadChildren: () =>
+      import('./pages/leaderboard/leaderboard.module').then(
+        (m) => m.LeaderboardPageModule
+      ),
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () =>
+      import('./pages/profile/profile.module').then((m) => m.ProfilePageModule),
   },
   {
     path: 'side-menu',
-    loadChildren: () => import('./modals/side-menu/side-menu.module').then( m => m.SideMenuPageModule)
+    loadChildren: () =>
+      import('./modals/side-menu/side-menu.module').then(
+        (m) => m.SideMenuPageModule
+      ),
   },
-
 ];
 
 @NgModule({
