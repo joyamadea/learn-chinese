@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 import { map } from 'rxjs/operators';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { ModalController } from '@ionic/angular';
+import { SideMenuPage } from 'src/app/modals/side-menu/side-menu.page';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +22,8 @@ export class HomePage {
     private userService: UserService,
     private statusBar: StatusBar,
     private storage: Storage,
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase,
+    private modalController: ModalController
   ) {
     this.statusBar.backgroundColorByHexString('#e5f9f8');
   }
@@ -77,10 +80,12 @@ export class HomePage {
     });
   }
 
-  logout() {
-    this.userService.logout().then(() => {
-      this.router.navigate(['/login']);
+  async openSideMenu() {
+    const modal = await this.modalController.create({
+      component: SideMenuPage,
+      cssClass: 'alert-modal-css',
     });
+    await modal.present();
   }
 
   gotoCat(type) {

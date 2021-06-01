@@ -41,6 +41,7 @@ export class UserService {
   }
 
   signUpWithName(name) {
+    this.storage.set('name', name);
     let res = name.split(' ');
     let newName = '';
     for (let i = 0; i < res.length; i++) {
@@ -62,6 +63,7 @@ export class UserService {
   }
 
   signInWithName(name) {
+    this.storage.set('name', name);
     let res = name.split(' ');
     let newName = '';
     for (let i = 0; i < res.length; i++) {
@@ -357,5 +359,9 @@ export class UserService {
           }
         }
       });
+  }
+
+  getProgress(id) {
+    const progressRef = this.db.list('');
   }
 }

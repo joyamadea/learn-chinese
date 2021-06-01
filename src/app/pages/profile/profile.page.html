@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="name">{{ name }}</div>
+  <div *ngIf="progress">
+    {{ progress.lastplayed }} - {{ progress.lastscore }}
+  </div>
+</ion-content>

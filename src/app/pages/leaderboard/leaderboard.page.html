@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>leaderboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="leaderboardList">
+    <div *ngFor="let l of leaderboardList.slice().reverse(); let i = index">
+      {{ l.name }} - {{ l.highscore }}
+    </div>
+  </div>
+</ion-content>
