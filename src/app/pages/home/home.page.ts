@@ -29,8 +29,6 @@ export class HomePage {
   }
 
   ngOnInit() {
-    var d = new Date(Date.now()).toLocaleDateString();
-    console.log(d);
     this.storage.get('uid').then((val) => {
       // this.userService.addScore(val, 30, 1);
       // this.userService.addTotalScore(val, 30);
@@ -75,9 +73,9 @@ export class HomePage {
       console.log(data);
     });
 
-    this.userService.getUid().then((data: any) => {
-      this.userService.create(data);
-    });
+    // this.userService.getUid().then((data: any) => {
+    //   this.userService.create(data);
+    // });
   }
 
   async openSideMenu() {

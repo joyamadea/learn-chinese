@@ -13,11 +13,6 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'test/:id',
-    loadChildren: () =>
-      import('./pages/test/test.module').then((m) => m.TestPageModule),
-  },
-  {
     path: 'category/:type',
     loadChildren: () =>
       import('./pages/category/category.module').then(
@@ -37,25 +32,6 @@ const routes: Routes = [
       import('./modals/confirm-exit/confirm-exit.module').then(
         (m) => m.ConfirmExitPageModule
       ),
-  },
-  {
-    path: 'achievements',
-    loadChildren: () =>
-      import('./pages/achievements/achievements.module').then(
-        (m) => m.AchievementsPageModule
-      ),
-  },
-  {
-    path: 'practice/:category',
-    loadChildren: () =>
-      import('./pages/practice/practice.module').then(
-        (m) => m.PracticePageModule
-      ),
-  },
-  {
-    path: 'learn/:id',
-    loadChildren: () =>
-      import('./pages/learn/learn.module').then((m) => m.LearnPageModule),
   },
   {
     path: 'main/:type/:id',

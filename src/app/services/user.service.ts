@@ -150,18 +150,6 @@ export class UserService {
         }
         console.log(data);
       });
-    // this.db
-    //   .object('/score/' + cat)
-    //   .valueChanges()
-    //   .subscribe((data: any) => {
-    //     // if(data.detail.category == cat && data.detail.score < score) {
-    //     //   body = {
-
-    //     //   }
-    //     // }
-    //     if(data.)
-    //     console.log(data);
-    //   });
   }
 
   addTotalScore(id, scoreAchieved) {
@@ -218,7 +206,6 @@ export class UserService {
     other.once('value', (snapshot) => {
       if (!snapshot.hasChild(id)) {
         body = {
-          learn: 'null',
           practice: 'null',
           test: 'null',
           name: userName,
@@ -237,25 +224,6 @@ export class UserService {
     });
   }
 
-  create(id): any {
-    console.log(id);
-    let body;
-    const userRef = this.db.list('/users/');
-    const other = this.db.database.ref('/users');
-    other.once('value', (snapshot) => {
-      if (!snapshot.hasChild(id)) {
-        body = {
-          learn: 'null',
-          practice: 'null',
-          test: 'null',
-        };
-        return userRef.set(id, body);
-      } else {
-        console.log('already exists');
-      }
-    });
-  }
-
   updateLvl(lvl, type) {
     let id;
     console.log(lvl);
@@ -268,23 +236,7 @@ export class UserService {
         .subscribe((data: any) => {
           let currLvl;
           let body;
-          if (type == 'learn') {
-            currLvl = data.learn;
-            const result = data.learn.split(';');
-            if (result[0] == 'null') {
-              const newLvl = lvl.toString();
-              body = {
-                learn: newLvl,
-              };
-            } else {
-              if (!result.includes(lvl.toString())) {
-                const newLvl = data.learn + ';' + lvl.toString();
-                body = {
-                  learn: newLvl,
-                };
-              }
-            }
-          } else if (type == 'practice') {
+          if (type == 'practice') {
             currLvl = data.practice;
             const result = data.practice.split(';');
             if (result[0] == 'null') {
@@ -327,8 +279,6 @@ export class UserService {
     this.leaderboardRef = this.db.list('/totalscores/', (query) => {
       return query.orderByChild('highscore');
     });
-    console.log(this.leaderboardRef);
-    // this.leaderboardRef = this.db.database.ref('/totalscores/').orderByChild('highscore').
     return this.leaderboardRef;
   }
 
@@ -359,9 +309,5 @@ export class UserService {
           }
         }
       });
-  }
-
-  getProgress(id) {
-    const progressRef = this.db.list('');
   }
 }
