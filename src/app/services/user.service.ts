@@ -322,7 +322,11 @@ export class UserService {
   }
 
   getLeaderboard(): AngularFireList<Leaderboard> {
-    this.leaderboardRef = this.db.list('/totalscores/');
+    this.leaderboardRef = this.db.list('/totalscores/', (query) => {
+      return query.orderByChild('highscore');
+    });
+    console.log(this.leaderboardRef);
+    // this.leaderboardRef = this.db.database.ref('/totalscores/').orderByChild('highscore').
     return this.leaderboardRef;
   }
 
