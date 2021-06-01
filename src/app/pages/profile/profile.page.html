@@ -1,12 +1,31 @@
-<ion-header>
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" slot="start" fill="clear">
+        <img src="./assets/buttons/circular/back.png" />
+        <ion-icon name="arrow-back" slot="icon-only" color="white"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="text-title" text-center>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div *ngIf="name">{{ name }}</div>
-  <div *ngIf="progress">
-    {{ progress.lastplayed }} - {{ progress.lastscore }}
+<ion-content class="ion-padding" fullscreen="true">
+  <div id="container">
+    <div class="text-title">Welcome,</div>
+    <div *ngIf="name" class="text-title font-30" style="margin-bottom: 30%">
+      {{ name }}
+    </div>
+    <div *ngIf="progress">
+      <div class="text-title">Last played</div>
+      <div style="margin-bottom: 30%">
+        {{ progress.lastplayed | date: "dd MMMM YYYY"}} - {{ progress.lastscore
+        }} points
+      </div>
+    </div>
+    <div *ngIf="highscore">
+      <div class="text-title">Highscore</div>
+      <div>{{ highscore }}</div>
+    </div>
   </div>
 </ion-content>

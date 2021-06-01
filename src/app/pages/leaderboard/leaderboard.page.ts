@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 import { map } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 
@@ -10,16 +12,30 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LeaderboardPage implements OnInit {
   leaderboardList: any;
-
+  name: any;
   constructor(
     private userService: UserService,
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase,
+    private router: Router,
+    private storage: Storage
   ) {}
 
   ngOnInit() {}
 
+  goBack() {
+    this.router.navigate(['/home']);
+  }
+
   ionViewWillEnter() {
     this.getLeaderboard();
+    this.getName();
+  }
+
+  getName() {
+    this.storage.get('name').then((val) => {
+      this.name = val;
+      console.log(this.name);
+    });
   }
 
   getLeaderboard() {
@@ -33,7 +49,6 @@ export class LeaderboardPage implements OnInit {
       )
       .subscribe(
         (data) => {
-          console.log(data);
           this.leaderboardList = data;
           this.leaderboardList.forEach((element) => {
             this.db
@@ -41,9 +56,14 @@ export class LeaderboardPage implements OnInit {
               .valueChanges()
               .subscribe((data: any) => {
                 element.name = data.name;
+                if (data.name === this.name) {
+                  element.highlight = true;
+                } else {
+                  element.highlight = false;
+                }
               });
+            console.log(this.leaderboardList);
           });
-          console.log('uwe', this.leaderboardList);
         },
         (err) => {
           console.log('err', err);

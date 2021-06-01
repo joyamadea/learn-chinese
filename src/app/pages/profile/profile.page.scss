@@ -1,0 +1,26 @@
+ion-content {
+  --background: url("../../../assets/meadow-3.png") no-repeat center center /
+    cover;
+  font-family: keepCalm;
+}
+
+ion-toolbar {
+  --background: transparent;
+}
+.header-md::after {
+  display: none;
+}
+
+#container {
+  text-align: center;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-75%);
+}
+
+.font-30 {
+  font-size: 30px;
+}

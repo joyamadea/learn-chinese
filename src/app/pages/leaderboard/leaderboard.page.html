@@ -1,13 +1,47 @@
-<ion-header>
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>leaderboard</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" slot="start" fill="clear">
+        <img src="./assets/buttons/circular/back.png" />
+        <ion-icon name="arrow-back" slot="icon-only" color="white"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="text-title" text-center>Leaderboard</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding" fullscreen="true">
+  <ion-row class="header-padding">
+    <ion-col size="2"> No. </ion-col>
+
+    <ion-col size="8"> Name </ion-col>
+
+    <ion-col size="2"> Score </ion-col>
+  </ion-row>
   <div *ngIf="leaderboardList">
-    <div *ngFor="let l of leaderboardList.slice().reverse(); let i = index">
+    <ion-card
+      *ngFor="let l of leaderboardList.slice().reverse(); let i = index"
+      class="no-margin-horizontal"
+    >
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="2"> {{ i+1 }} </ion-col>
+
+          <ion-col
+            size="8"
+            [ngClass]="{
+            'text-title': l.highlight
+          }"
+          >
+            {{ l.name }}
+          </ion-col>
+
+          <ion-col size="2"> {{ l.highscore }} </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <!-- <div *ngFor="let l of leaderboardList.slice().reverse(); let i = index">
       {{ l.name }} - {{ l.highscore }}
-    </div>
+    </div> -->
   </div>
 </ion-content>
