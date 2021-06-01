@@ -1,37 +1,36 @@
 <ion-content class="ion-text-center">
-  <div class="wrapper"></div>
-  <ion-row>
-    <ion-col size="12" class="sign-message ion-padding-top">
-      <img class="padding-top-20" src="assets/girl-thumbs-up.png" />
-    </ion-col>
+  <div id="container">
+    <ion-row>
+      <ion-col size="12" class="sign-message">
+        <img src="assets/girl-thumbs-up.png" />
+      </ion-col>
 
-    <ion-col size="12" class="message padding-horizontal-22">
-      Congratulations! You have learned everything
-    </ion-col>
+      <ion-col size="12" class="message padding-horizontal-22">
+        Congratulations! You have learned everything
+      </ion-col>
 
-    <ion-col size="6">
-      <div
-        class="ion-activatable ripple-parent starting-button ion-text-right"
-        (click)="retry()"
-      >
-        <img src="assets/buttons/circular/retry.png" class="ion-text-right" />
-        <ion-ripple-effect></ion-ripple-effect>
-      </div>
-    </ion-col>
-    <ion-col size="6">
-      <div
-        class="ion-activatable ripple-parent starting-button ion-text-left"
-        (click)="gotoHome()"
-      >
-        <img src="assets/buttons/circular/home.png" class="ion-text-left" />
-        <ion-ripple-effect></ion-ripple-effect>
-      </div>
-    </ion-col>
-  </ion-row>
+      <ion-col size="6">
+        <div
+          class="ion-activatable ripple-parent starting-button ion-text-right"
+          (click)="retry()"
+        >
+          <img src="assets/buttons/circular/retry.png" class="ion-text-right" />
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <div
+          class="ion-activatable ripple-parent starting-button ion-text-left"
+          (click)="gotoHome()"
+        >
+          <img src="assets/buttons/circular/home.png" class="ion-text-left" />
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+      </ion-col>
+    </ion-row>
 
-  <ion-row *ngIf="type == 'test'">
-    <ion-col>
-      Score: {{ score }}
-    </ion-col>
-  </ion-row>
+    <ion-row *ngIf="type == 'test'">
+      <ion-col> Score: {{ score }} </ion-col>
+    </ion-row>
+  </div>
 </ion-content>

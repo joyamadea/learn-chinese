@@ -126,7 +126,7 @@ export class CategoryPage implements OnInit {
 
   async openModal() {
     const modal = await this.modalController.create({
-      component: ConfirmExitPage,
+      component: LevelPassPage,
       cssClass: 'alert-modal-css',
       backdropDismiss: false,
     });
