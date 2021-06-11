@@ -1,5 +1,5 @@
 {
-  "name": "learn-chinese",
+  "name": "Learn_Chinese",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -41,6 +41,7 @@
     "cordova-plugin-tts": "^0.2.3",
     "es6-promise-plugin": "^4.2.2",
     "firebase": "^8.4.1",
+    "moment": "^2.29.1",
     "rxjs": "~6.6.0",
     "stream": "0.0.2",
     "tslib": "^2.0.0",

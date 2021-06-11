@@ -31,6 +31,11 @@ export class MainPage implements OnInit {
   altAnswer: any;
   type: any;
   uid: any;
+  listened = false;
+  options = {
+    language: 'cmn-Hans-CN',
+    showPopup: false,
+  };
 
   constructor(
     private speechRecognition: SpeechRecognition,
@@ -164,7 +169,7 @@ export class MainPage implements OnInit {
       }
     } else {
       if (this.type == 'test') {
-        // this.updatingScores();
+        this.updatingScores();
       }
       // FINISH QUIZ
       this.userService.updateLvl(this.cat, this.type);
@@ -175,12 +180,15 @@ export class MainPage implements OnInit {
 
   updatingScores() {
     let newScore = this.score * 10;
-    console.log(this.score);
-    this.userService.addScore(this.uid, newScore, this.cat);
+    console.log('score', newScore);
+    const trai = this.userService.addScore(this.uid, newScore, this.cat);
+    console.log(trai);
     this.userService.addTotalScore(this.uid, newScore);
+    this.userService.setProgress(this.uid, newScore);
   }
 
   async modalFinished() {
+    const newScore = this.score * 10;
     const modal = await this.modalController.create({
       component: LevelPassPage,
       cssClass: 'alert-modal-css',
@@ -188,6 +196,7 @@ export class MainPage implements OnInit {
       componentProps: {
         level: this.cat,
         type: this.type,
+        score: newScore,
       },
     });
     await modal.present();
@@ -229,46 +238,41 @@ export class MainPage implements OnInit {
   }
 
   startSpeech() {
-    // SPEECH RECOGNITION OPTIONS
-    let options = {
-      language: 'cmn-Hans-CN',
-      showPopup: false,
-    };
-
     let rightAnswer = false;
-    let listened = false;
 
     // SPEECH RECOGNITION START LISTENING
-    this.speechRecognition.startListening(options).subscribe(
-      (matches: string[]) => {
-        console.log(matches);
-        // FIRST MATCH = ANSWER
-        this.answer = matches[0];
-        this.altAnswer = matches[1];
-        // IS ANSWER ACCORDING TO DB
-        if (
-          this.answer == this.quiz[this.i].answer ||
-          this.altAnswer == this.quiz[this.i].answer
-        ) {
-          rightAnswer = true;
-        }
-        // ZONING
-        this.zone.run(() => {
-          if (rightAnswer) {
-            this.rightToast();
-            this.next();
-            listened = false;
-          } else if (!rightAnswer) {
-            this.wrongToast();
-            this.next('wrong');
-            listened = false;
+    if (!this.listened) {
+      this.speechRecognition.startListening(this.options).subscribe(
+        (matches: string[]) => {
+          console.log(matches);
+          // FIRST MATCH = ANSWER
+          this.answer = matches[0];
+          this.altAnswer = matches[1];
+          // IS ANSWER ACCORDING TO DB
+          if (
+            this.answer == this.quiz[this.i].answer ||
+            this.altAnswer == this.quiz[this.i].answer
+          ) {
+            rightAnswer = true;
           }
-        });
-      },
-      (err) => {
-        console.log('error speech', err);
-        listened = false;
-      }
-    );
+          // ZONING
+          this.zone.run(() => {
+            if (rightAnswer) {
+              this.rightToast();
+              this.next();
+              this.listened = false;
+            } else if (!rightAnswer) {
+              this.wrongToast();
+              this.next('wrong');
+              this.listened = false;
+            }
+          });
+        },
+        (err) => {
+          console.log('error speech', err);
+          this.listened = false;
+        }
+      );
+    }
   }
 }

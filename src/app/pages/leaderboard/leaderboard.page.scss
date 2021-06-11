@@ -1,0 +1,28 @@
+ion-content {
+  --background: url("../../../assets/meadow-3.png") no-repeat center center /
+    cover;
+  font-family: keepcalm;
+}
+ion-toolbar {
+  --background: transparent;
+}
+.header-md::after {
+  display: none;
+}
+
+.no-margin-horizontal {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.header-padding {
+  padding-top: 13px;
+  padding-bottom: 13px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.current-player {
+  color: #f09d23;
+  font-weight: bold;
+}

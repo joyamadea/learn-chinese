@@ -18,7 +18,7 @@ export class AppComponent {
     private storage: Storage,
     private router: Router
   ) {
-    this.statusBar.backgroundColorByHexString('#e5f9f8');
+    this.statusBar.backgroundColorByHexString('#2e495e');
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
 
     this.checkUser();

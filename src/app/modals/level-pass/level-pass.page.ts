@@ -10,6 +10,7 @@ import { ModalController } from '@ionic/angular';
 export class LevelPassPage implements OnInit {
   @Input() level;
   @Input() type;
+  @Input() score;
   constructor(
     private modalController: ModalController,
     private router: Router

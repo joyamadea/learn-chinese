@@ -34,6 +34,7 @@
 
 .alert-modal-css {
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.32);
+  --background: transparent !important;
   .modal-wrapper {
     background: transparent !important;
     height: 55%;
@@ -53,5 +54,8 @@
   &-title {
     color: #ffd21f;
     font-weight: bold;
+  }
+  &-title-alt {
+    color: #f09d23;
   }
 }
