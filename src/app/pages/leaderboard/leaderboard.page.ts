@@ -31,18 +31,25 @@ export class LeaderboardPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.getLeaderboard();
-    this.getName();
-  }
-
-  getName() {
-    this.storage.get('name').then((val) => {
-      this.name = val;
-      console.log(this.name);
+    this.getName().then((res) => {
+      this.getLeaderboard(res);
     });
   }
+  
 
-  getLeaderboard() {
+  async getName() {
+    let name;
+    name = await this.storage.get('name');
+    // this.storage.get('name').then((val) => {
+    //   this.name = val;
+    //   console.log(this.name);
+      
+    // });
+    console.log(name);
+    return name;
+  }
+
+  getLeaderboard(name) {
     this.userService
       .getLeaderboard()
       .snapshotChanges()
@@ -60,14 +67,14 @@ export class LeaderboardPage implements OnInit {
               .valueChanges()
               .subscribe((data: any) => {
                 element.name = data.name;
-                if (data.name === this.name) {
+                if (data.name === name) {
                   element.highlight = true;
                 } else {
                   element.highlight = false;
                 }
               });
-            console.log(this.leaderboardList);
           });
+          console.log(this.leaderboardList);
         },
         (err) => {
           console.log('err', err);

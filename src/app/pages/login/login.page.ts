@@ -32,6 +32,7 @@ export class LoginPage implements OnInit {
         if (err.code == 'auth/email-already-in-use') {
           this.userService.signInWithName(this.user).then(
             (data) => {
+              
               this.router.navigate(['/home']);
               console.log(data);
             },
@@ -45,6 +46,7 @@ export class LoginPage implements OnInit {
 
     this.userService.getUid().then((data: any) => {
       this.userService.createUser(data, this.user);
+      this.userService.addTotalScore(data, 0);
       this.router.navigate(['/home']);
       this.storage.set('uid', data);
     });

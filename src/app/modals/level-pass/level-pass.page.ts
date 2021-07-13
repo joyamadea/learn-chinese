@@ -26,7 +26,7 @@ export class LevelPassPage implements OnInit {
   }
 
   retry() {
-    this.router.navigate(['/main/' + this.type + this.level]);
-    this.modalController.dismiss();
+    this.router.navigate(['/main/' + this.type + '/' + this.level]);
+    this.modalController.dismiss('retry');
   }
 }
