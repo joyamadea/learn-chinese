@@ -1,0 +1,67 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="openSideMenu()" slot="start" fill="clear">
+        <img src="./assets/buttons/circular/sidemenu.png" />
+        <ion-icon name="close" slot="icon-only" color="white"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  <div id="container">
+    <ion-row
+      class="text-title ion-text-center big-letters"
+      style="margin-top: 40%"
+    >
+      <ion-col> Learn Chinese </ion-col>
+    </ion-row>
+
+    <!-- <ion-row style="margin-top: 10px">
+      <ion-col>
+        <div class="ion-activatable ripple-parent starting-button">
+          <img
+            src="assets/buttons/learnBtn.png"
+            style="width: 100%"
+            (click)="gotoCat('learn')"
+          />
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+      </ion-col>
+    </ion-row> -->
+
+    <ion-row style="margin-top: 10px">
+      <ion-col>
+        <!-- <ion-item lines="none"> -->
+        <div class="ion-activatable ripple-parent starting-button">
+          <img
+            src="assets/buttons/practiceBtn.png"
+            style="width: 100%"
+            (click)="gotoCat('practice')"
+          />
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+        <!-- </ion-item> -->
+        <!-- <ion-button class="boxes text-category" expand="block" color="verdigris">Practice</ion-button> -->
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 10px">
+      <ion-col>
+        <!-- <ion-button (click)="gotoCat()" class="boxes text-category" expand="block" color="verdigris">Learn</ion-button> -->
+        <!-- <ion-item lines="none"> -->
+        <div class="ion-activatable ripple-parent starting-button">
+          <img
+            src="assets/buttons/testBtn.png"
+            style="width: 100%"
+            (click)="gotoCat('test')"
+          />
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+
+        <!-- </ion-item> -->
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

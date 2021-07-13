@@ -1,0 +1,57 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" slot="start" fill="clear">
+        <img src="./assets/buttons/circular/back.png" />
+        <ion-icon name="arrow-back" slot="icon-only" color="white"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="text-title" text-center>Categories</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" fullscreen="true">
+  <div>
+    <ion-row
+      class="ion-align-items-center ion-justify-content-center"
+      *ngIf="loaded"
+    >
+      <ion-col
+        class="ion-text-center ion-no-padding"
+        *ngFor="let category of categories"
+        size="6"
+      >
+        <div class="ion-activatable ripple-parent starting-button">
+          <img
+            [src]="category.url"
+            style="width: 100%"
+            (click)="gotoLevels(category.key)"
+          />
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+        <!-- <div
+          *ngIf="!category.available && type == 'test'"
+          class="disabled starting-button"
+        >
+          <img [src]="category.url" style="width: 100%" />
+        </div> -->
+        <ion-row
+          class="ion-justify-content-center ion-align-items-center"
+          style="margin-bottom: 10px"
+        >
+          <ion-col size="6" class="align-self-center">
+            <div style="align-self: center" *ngIf="category.available">
+              <img style="width: 25%" src="./assets/s1.png" />
+            </div>
+            <div style="align-self: center" *ngIf="!category.available">
+              <img style="width: 25%" src="./assets/s2.png" />
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <!-- <ion-button (click)="openModal()">uwee</ion-button> - -->
+  <!-- <img [src]="url"> -->
+</ion-content>

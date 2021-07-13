@@ -1,0 +1,63 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" slot="start" fill="clear">
+        <img src="./assets/buttons/circular/back.png" />
+        <ion-icon name="arrow-back" slot="icon-only" color="white"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="text-title-alt" style="font-weight: bold" text-center
+      >Profile</ion-title
+    >
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" fullscreen="true">
+  <div id="container">
+    <div class="text-title-alt">Welcome,</div>
+    <div
+      *ngIf="name"
+      class="text-title-alt font-30"
+      style="margin-bottom: 10%; color: black"
+    >
+      {{ name }}
+    </div>
+
+    <ion-card *ngIf="progress" class="no-margin-horizontal">
+      <ion-card-content>
+        <ion-row>
+          <ion-col class="text-title-alt" style="font-family: keepCalm">
+            Last played
+          </ion-col>
+        </ion-row>
+        <hr />
+        <ion-row>
+          <ion-col
+            style="font-family: keepCalm; font-size: 14px; font-weight: 100"
+          >
+            {{ progress.lastplayed | date: "dd MMMM YYYY"}} <br />
+            {{ progress.lastscore }} points</ion-col
+          >
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="highscore" class="no-margin-horizontal">
+      <ion-card-content>
+        <ion-row>
+          <ion-col class="text-title-alt" style="font-family: keepCalm">
+            Total Score
+          </ion-col>
+        </ion-row>
+        <hr />
+        <ion-row>
+          <ion-col
+            style="font-family: keepCalm; font-size: 14px; font-weight: 100"
+          >
+            {{ highscore }} points</ion-col
+          >
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
