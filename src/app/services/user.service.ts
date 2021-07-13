@@ -118,7 +118,7 @@ export class UserService {
 
   addScore(id, scoreAchieved, cat) {
     let body;
-
+    let count = 0;
     this.getScore(cat)
       .snapshotChanges()
       .pipe(
@@ -130,18 +130,24 @@ export class UserService {
         let notFound = true;
         console.log('data', data);
         data.forEach((element) => {
-          if (element.key == id && scoreAchieved > element.score) {
+          if (
+            element.key == id &&
+            scoreAchieved > element.score &&
+            count == 0
+          ) {
             console.log('masuk key == id');
             const ref = this.db.list('/score/' + cat);
             body = {
               score: scoreAchieved,
             };
             notFound = false;
+            count++;
             return ref.update(id, body);
           }
         });
-        if (notFound) {
+        if (notFound && count == 0) {
           console.log('masuk not found');
+          count++;
           const ref = this.db.list('/score/' + cat);
           body = {
             score: scoreAchieved,

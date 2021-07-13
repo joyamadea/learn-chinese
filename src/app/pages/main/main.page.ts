@@ -199,7 +199,16 @@ export class MainPage implements OnInit {
         score: newScore,
       },
     });
-    await modal.present();
+
+    modal.onDidDismiss().then((res) => {
+      if (res) {
+        this.counter = 0;
+        this.score = 0;
+        this.random();
+        console.log('masuk');
+      }
+    });
+    return await modal.present();
   }
 
   async rightToast() {
@@ -248,13 +257,18 @@ export class MainPage implements OnInit {
           // FIRST MATCH = ANSWER
           this.answer = matches[0];
           this.altAnswer = matches[1];
+          matches.forEach(element => {
+            if(element == this.quiz[this.i].answer) {
+              rightAnswer = true;
+            }
+          });
           // IS ANSWER ACCORDING TO DB
-          if (
-            this.answer == this.quiz[this.i].answer ||
-            this.altAnswer == this.quiz[this.i].answer
-          ) {
-            rightAnswer = true;
-          }
+          // if (
+          //   this.answer == this.quiz[this.i].answer ||
+          //   this.altAnswer == this.quiz[this.i].answer
+          // ) {
+          //   rightAnswer = true;
+          // }
           // ZONING
           this.zone.run(() => {
             if (rightAnswer) {
